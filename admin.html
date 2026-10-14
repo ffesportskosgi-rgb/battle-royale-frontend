@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BATTLE ROYALE | Admin</title>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#090b12;color:#f5f5f5;font-family:Arial,sans-serif;padding:24px}
+    main{max-width:950px;margin:35px auto}
+    .panel{background:#151923;border:1px solid #343949;border-radius:16px;padding:24px;margin-bottom:20px}
+    h1{color:#ff6538;margin-top:0}
+    input,button{width:100%;padding:13px;margin-top:12px;border-radius:8px;font-size:16px}
+    input{background:#0c1018;color:white;border:1px solid #444}
+    button{background:#ff6538;color:#111;border:0;font-weight:bold;cursor:pointer}
+    .muted{color:#b5bdca}
+    #message{white-space:pre-wrap;margin-top:15px}
+    .entry{border-top:1px solid #343949;padding:14px 0;overflow-wrap:anywhere}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+<main>
+  <section class="panel">
+    <h1>⚔ BATTLE ROYALE</h1>
+    <p class="muted">Tournament Administration Portal</p>
+    <form id="loginForm">
+      <label for="username">Admin username</label>
+      <input id="username" autocomplete="username" required>
+      <label for="password">Admin password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+      <button type="submit">SECURE LOGIN</button>
+    </form>
+    <div id="message" role="status"></div>
+  </section>
+
+  <section id="dashboard" class="panel hidden">
+    <h2>Player Registrations</h2>
+    <button id="refresh">Refresh registrations</button>
+    <div id="registrations"></div>
+    <button id="logout">Log out</button>
+  </section>
+</main>
+
+<script>
+const API_BASE = 'https://battle-royale-registration-system.onrender.com';
+let adminToken = '';
+
+const message = document.getElementById('message');
+const dashboard = document.getElementById('dashboard');
+const list = document.getElementById('registrations');
+
+document.getElementById('loginForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  message.textContent = 'Signing in...';
+
+  try {
+    const response = await fetch(`${API_BASE}/api/admin/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        username: document.getElementById('username').value.trim(),
+        password: document.getElementById('password').value
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || data.error || 'Login failed.');
+
+    adminToken = data.token || data.accessToken || '';
+    if (!adminToken) throw new Error('Login response did not contain a token. Backend response needs checking.');
+
+    message.textContent = 'Login successful.';
+    dashboard.classList.remove('hidden');
+    await loadRegistrations();
+  } catch (error) {
+    message.textContent = error.message || 'Unable to connect to the backend.';
+  }
+});
+
+async function loadRegistrations() {
+  list.textContent = 'Loading registrations...';
+
+  try {
+    const response = await fetch(`${API_BASE}/api/admin/registrations`, {
+      headers: {Authorization: `Bearer ${adminToken}`}
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || data.error || 'Could not load registrations.');
+
+    const rows = Array.isArray(data) ? data :
+      (data.registrations || data.data || []);
+
+    list.replaceChildren();
+
+    if (!rows.length) {
+      list.textContent = 'No registrations returned, or the backend response format needs checking.';
+      return;
+    }
+
+    rows.forEach((player) => {
+      const item = document.createElement('article');
+      item.className = 'entry';
+
+      const details = document.createElement('pre');
+      details.style.whiteSpace = 'pre-wrap';
+      details.textContent = JSON.stringify(player, null, 2);
+      item.appendChild(details);
+      list.appendChild(item);
+    });
+  } catch (error) {
+    list.textContent = error.message || 'Failed to load registrations.';
+  }
+}
+
+document.getElementById('refresh').addEventListener('click', loadRegistrations);
+
+document.getElementById('logout').addEventListener('click', () => {
+  adminToken = '';
+  dashboard.classList.add('hidden');
+  list.replaceChildren();
+  document.getElementById('password').value = '';
+  message.textContent = 'Logged out.';
+});
+
+</script>
+</body>
+</html>
