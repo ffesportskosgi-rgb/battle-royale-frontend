@@ -2,129 +2,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BATTLE ROYALE | Admin</title>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;background:#090b12;color:#f5f5f5;font-family:Arial,sans-serif;padding:24px}
-    main{max-width:950px;margin:35px auto}
-    .panel{background:#151923;border:1px solid #343949;border-radius:16px;padding:24px;margin-bottom:20px}
-    h1{color:#ff6538;margin-top:0}
-    input,button{width:100%;padding:13px;margin-top:12px;border-radius:8px;font-size:16px}
-    input{background:#0c1018;color:white;border:1px solid #444}
-    button{background:#ff6538;color:#111;border:0;font-weight:bold;cursor:pointer}
-    .muted{color:#b5bdca}
-    #message{white-space:pre-wrap;margin-top:15px}
-    .entry{border-top:1px solid #343949;padding:14px 0;overflow-wrap:anywhere}
-    .hidden{display:none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>BATTLE ROYALE Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:16px;background:#090b12;color:#f5f5f5;font-family:Arial,sans-serif}
+main{max-width:1000px;margin:20px auto}
+.panel,.card{background:#151923;border:1px solid #343949;border-radius:14px;padding:18px;margin-bottom:16px}
+h1{color:#ff6538;margin-top:0}
+input,button{width:100%;padding:13px;margin-top:12px;border-radius:8px;font-size:16px}
+input{background:#0c1018;color:white;border:1px solid #444}
+button{background:#ff6538;color:#111;border:0;font-weight:bold;cursor:pointer}
+.secondary{background:#293142;color:white}
+.hidden{display:none}
+.muted{color:#adb7c7}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0}
+.stat{background:#0b0e15;padding:14px;border-radius:10px;overflow-wrap:anywhere}
+.stat strong{display:block;color:#ff6538;font-size:24px;margin-top:6px}
+#registrations{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.card{margin:0;background:#0d111a;overflow-wrap:anywhere}
+.card h3{margin-top:0}
+.detail{padding:9px 0;border-bottom:1px solid #293142}
+.detail small{display:block;color:#adb7c7;margin-bottom:4px}
+.proof{display:block;width:100%;max-height:250px;object-fit:contain;margin-top:12px;background:#080a0f;border-radius:8px}
+.tag{display:inline-block;padding:5px 9px;border-radius:20px;background:#382116;color:#ffb49c;font-size:12px}
+#message{white-space:pre-wrap;margin-top:12px}
+@media(max-width:400px){body{padding:9px}.panel,.card{padding:13px}}
+</style>
 </head>
 <body>
 <main>
-  <section class="panel">
-    <h1>⚔ BATTLE ROYALE</h1>
-    <p class="muted">Tournament Administration Portal</p>
-    <form id="loginForm">
-      <label for="username">Admin username</label>
-      <input id="username" autocomplete="username" required>
-      <label for="password">Admin password</label>
-      <input id="password" type="password" autocomplete="current-password" required>
-      <button type="submit">SECURE LOGIN</button>
-    </form>
-    <div id="message" role="status"></div>
-  </section>
+<section class="panel">
+<h1>⚔ BATTLE ROYALE</h1>
+<p class="muted">Tournament Administration Portal</p>
+<form id="loginForm">
+<label for="username">Admin username</label>
+<input id="username" autocomplete="username" required>
+<label for="password">Admin password</label>
+<input id="password" type="password" autocomplete="current-password" required>
+<button id="loginButton" type="submit">SECURE LOGIN</button>
+</form>
+<div id="message" role="status" aria-live="polite"></div>
+</section>
 
-  <section id="dashboard" class="panel hidden">
-    <h2>Player Registrations</h2>
-    <button id="refresh">Refresh registrations</button>
-    <div id="registrations"></div>
-    <button id="logout">Log out</button>
-  </section>
+<section id="dashboard" class="panel hidden">
+<h2>Player Registrations</h2>
+<p class="muted">Review registrations and payment proofs.</p>
+<button id="refresh" type="button">↻ Refresh registrations</button>
+<div class="stats">
+<div class="stat">Total<strong id="total">0</strong></div>
+<div class="stat">Solo<strong id="solo">0</strong></div>
+<div class="stat">Squad<strong id="squad">0</strong></div>
+</div>
+<div id="registrations"></div>
+<button class="secondary" id="logout" type="button">Log out</button>
+</section>
 </main>
 
 <script>
-const API_BASE = 'https://battle-royale-registration-system.onrender.com';
-let adminToken = '';
+const API='https://battle-royale-registration-system.onrender.com';
+let token='';
+const $=id=>document.getElementById(id);
 
-const message = document.getElementById('message');
-const dashboard = document.getElementById('dashboard');
-const list = document.getElementById('registrations');
-
-document.getElementById('loginForm').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  message.textContent = 'Signing in...';
-
-  try {
-    const response = await fetch(`${API_BASE}/api/admin/login`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        username: document.getElementById('username').value.trim(),
-        password: document.getElementById('password').value
-      })
-    });
-
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || data.error || 'Login failed.');
-
-    adminToken = data.token || data.accessToken || '';
-    if (!adminToken) throw new Error('Login response did not contain a token. Backend response needs checking.');
-
-    message.textContent = 'Login successful.';
-    dashboard.classList.remove('hidden');
-    await loadRegistrations();
-  } catch (error) {
-    message.textContent = error.message || 'Unable to connect to the backend.';
-  }
+$('loginForm').addEventListener('submit',async e=>{
+e.preventDefault();
+$('loginButton').disabled=true;
+$('message').textContent='Signing in...';
+try{
+const res=await fetch(API+'/api/admin/login',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+username:$('username').value.trim(),
+password:$('password').value
+})
+});
+const data=await res.json();
+if(!res.ok)throw Error(data.message||data.error||'Login failed');
+token=data.token||data.accessToken||'';
+if(!token)throw Error('No login token received. Backend response needs checking.');
+$('loginForm').classList.add('hidden');
+$('dashboard').classList.remove('hidden');
+$('message').textContent='Login successful.';
+await load();
+}catch(err){
+$('message').textContent=err.message||'Could not connect to backend.';
+}finally{$('loginButton').disabled=false;}
 });
 
-async function loadRegistrations() {
-  list.textContent = 'Loading registrations...';
-
-  try {
-    const response = await fetch(`${API_BASE}/api/admin/registrations`, {
-      headers: {Authorization: `Bearer ${adminToken}`}
-    });
-
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || data.error || 'Could not load registrations.');
-
-    const rows = Array.isArray(data) ? data :
-      (data.registrations || data.data || []);
-
-    list.replaceChildren();
-
-    if (!rows.length) {
-      list.textContent = 'No registrations returned, or the backend response format needs checking.';
-      return;
-    }
-
-    rows.forEach((player) => {
-      const item = document.createElement('article');
-      item.className = 'entry';
-
-      const details = document.createElement('pre');
-      details.style.whiteSpace = 'pre-wrap';
-      details.textContent = JSON.stringify(player, null, 2);
-      item.appendChild(details);
-      list.appendChild(item);
-    });
-  } catch (error) {
-    list.textContent = error.message || 'Failed to load registrations.';
-  }
+function addField(parent,label,value){
+const d=document.createElement('div');
+d.className='detail';
+const s=document.createElement('small');
+s.textContent=label;
+const v=document.createElement('div');
+v.textContent=value==null||value===''?'—':String(value);
+d.append(s,v);
+parent.appendChild(d);
 }
 
-document.getElementById('refresh').addEventListener('click', loadRegistrations);
-
-document.getElementById('logout').addEventListener('click', () => {
-  adminToken = '';
-  dashboard.classList.add('hidden');
-  list.replaceChildren();
-  document.getElementById('password').value = '';
-  message.textContent = 'Logged out.';
+async function load(){
+$('refresh').disabled=true;
+const box=$('registrations');
+box.replaceChildren();
+try{
+const res=await fetch(API+'/api/admin/registrations',{
+headers:{Authorization:'Bearer '+token}
 });
+const data=await res.json();
+if(res.status===401||res.status===403){
+token='';
+$('dashboard').classList.add('hidden');
+$('loginForm').classList.remove('hidden');
+throw Error('Session expired. Please log in again.');
+}
+if(!res.ok)throw Error(data.message||data.error||'Could not load registrations.');
+const rows=Array.isArray(data)?data:(data.registrations||data.data||[]);
+$('total').textContent=rows.length;
+$('solo').textContent=rows.filter(r=>String(r.mode||'').toLowerCase()==='solo').length;
+$('squad').textContent=rows.filter(r=>String(r.mode||'').toLowerCase()==='squad').length;
+if(!rows.length){
+box.textContent='No registrations found.';
+return;
+}
+rows.forEach((r,i)=>{
+const card=document.createElement('article');
+card.className='card';
+const title=document.createElement('h3');
+title.textContent=r.registrationCode||('Registration '+(i+1));
+card.appendChild(title);
+const mode=document.createElement('span');
+mode.className='tag';
+mode.textContent=r.mode||'Registration';
+card.appendChild(mode);
 
+addField(card,'Player name',r.playerName||r.name);
+addField(card,'Free Fire ID',r.ffId||r.ffID||r.ff_id||r.playerId);
+addField(card,'Registered on',r.createdAt?new Date(r.createdAt).toLocaleString():'Not available');
+
+if(Array.isArray(r.players)){
+r.players.forEach((p,j)=>{
+addField(card,'Player '+(j+1),[p.name,p.ffId||p.ffID||p.ff_id||p.uid].filter(Boolean).join(' — '));
+});
+}
+if(r.proofUrl){
+const label=document.createElement('p');
+label.className='muted';
+label.textContent='Payment proof';
+card.appendChild(label);
+const img=document.createElement('img');
+img.className='proof';
+img.alt='Payment proof image';
+img.loading='lazy';
+img.src=r.proofUrl;
+img.onerror=()=>{img.alt='Preview unavailable. Use View payment proof below.';img.style.display='none';};
+card.appendChild(img);
+const open=document.createElement('button');
+open.type='button';
+open.textContent='View payment proof';
+open.addEventListener('click',()=>window.open(r.proofUrl,'_blank','noopener,noreferrer'));
+card.appendChild(open);
+}else{
+addField(card,'Payment proof','No proof link returned');
+}
+box.appendChild(card);
+});
+}catch(err){
+box.textContent=err.message||'Failed to load registrations.';
+}finally{$('refresh').disabled=false;}
+}
+
+$('refresh').addEventListener('click',load);
+$('logout').addEventListener('click',()=>{
+token='';
+$('dashboard').classList.add('hidden');
+$('loginForm').classList.remove('hidden');
+$('password').value='';
+$('registrations').replaceChildren();
+$('message').textContent='Logged out.';
+});
 </script>
 </body>
 </html>
