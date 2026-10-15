@@ -329,24 +329,7 @@ document.getElementById('back-to-form').addEventListener('click',()=>{
 
   document.querySelector('.submit').disabled = true;
 });
-```
 
-**Important:** This code assumes a `stopFireworks()` function exists. We must verify that before committing. Otherwise, the button could throw an error.
-
-### Before saving
-
-Search `index.html` for:
-
-```javascript
-function stopFireworks
-```
-
-Tell me whether you find it.
-
-- If it exists, we'll verify its behavior.
-- If it doesn't, I'll give you the safe code to stop the fireworks and their sound.
-
-We'll then handle the Squad fields separately so the Solo registration remains intact.
  }catch(err){
   showFormMessage(err.message||'Unable to submit registration. Please check your connection and try again.',true);
  }finally{
