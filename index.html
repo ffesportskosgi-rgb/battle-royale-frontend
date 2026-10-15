@@ -1,59 +1,100 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BATTLE ROYALE — Free Fire Tournament</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
 :root{--red:#ff3b18;--gold:#ffb21c;--ink:#07090c;--glass:rgba(9,12,17,.82)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#07090c;color:#fff;font-family:Rajdhani,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#07090c;color:#fff;font-family:Rajdhani,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
 #bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;filter:brightness(.35) saturate(1.35)}
 .video-shade{position:fixed;inset:0;z-index:-2;background:linear-gradient(110deg,rgba(0,0,0,.93) 0%,rgba(15,8,5,.68) 48%,rgba(80,14,3,.28) 100%),linear-gradient(0deg,#07090c 0%,transparent 65%)}
 .grain{position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
 header{display:flex;align-items:center;justify-content:space-between;padding:24px clamp(20px,6vw,90px);border-bottom:1px solid #ffffff1b}
-.brand{font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:18px}.brand span{color:var(--red)}.status{font-size:13px;letter-spacing:2px;color:#ffb5a6}.live-dot{display:inline-block;width:7px;height:7px;background:#ff3b18;border-radius:50%;box-shadow:0 0 12px #ff3b18;margin-right:8px;animation:pulse 1s infinite}
+.brand{font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:18px}
+.brand span{color:var(--red)}
+.status{font-size:13px;letter-spacing:2px;color:#ffb5a6}
+.live-dot{display:inline-block;width:7px;height:7px;background:#ff3b18;border-radius:50%;box-shadow:0 0 12px #ff3b18;margin-right:8px;animation:pulse 1s infinite}
 main{width:min(1180px,90%);margin:auto;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,6vw,85px);align-items:center;padding:55px 0 70px;min-height:calc(100vh - 80px)}
-.kicker{font-family:Orbitron,sans-serif;color:var(--gold);letter-spacing:4px;font-size:12px}.hero h1{font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(48px,7vw,92px);line-height:.93;letter-spacing:-3px;margin:20px 0;text-transform:uppercase;text-shadow:4px 4px 0 #6d1609}
+.kicker{font-family:Orbitron,sans-serif;color:var(--gold);letter-spacing:4px;font-size:12px}
+.hero h1{font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(48px,7vw,92px);line-height:.93;letter-spacing:-3px;margin:20px 0;text-transform:uppercase;text-shadow:4px 4px 0 #6d1609}
 .hero h1 em{font-style:normal;color:var(--red);display:block;-webkit-text-stroke:1px #ff8b4e}
-.hero p{font-size:20px;line-height:1.4;color:#d0d0d0;max-width:470px}.chips{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}.chip{border:1px solid #ffffff30;padding:8px 12px;font-size:12px;letter-spacing:1.5px;background:#ffffff09;clip-path:polygon(0 0,100% 0,100% 72%,88% 100%,0 100%)}
-.cta{display:inline-flex;align-items:center;gap:10px;color:white;text-decoration:none;background:var(--red);padding:14px 21px;font-family:Orbitron,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.4px;box-shadow:5px 5px 0 #741b0b;transition:.2s}.cta:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #741b0b}
+.hero p{font-size:20px;line-height:1.4;color:#d0d0d0;max-width:470px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}
+.chip{border:1px solid #ffffff30;padding:8px 12px;font-size:12px;letter-spacing:1.5px;background:#ffffff09;clip-path:polygon(0 0,100% 0,100% 72%,88% 100%,0 100%)}
+.cta{display:inline-flex;align-items:center;gap:10px;color:white;text-decoration:none;background:var(--red);padding:14px 21px;font-family:Orbitron,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.4px;box-shadow:5px 5px 0 #741b0b;transition:.2s}
+.cta:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #741b0b}
 .panel{position:relative;background:linear-gradient(145deg,rgba(25,28,32,.94),rgba(6,8,11,.94));border:1px solid #ffffff25;padding:clamp(22px,3vw,34px);box-shadow:0 20px 80px #0009}
-.panel:before,.panel:after{content:"";position:absolute;width:35px;height:35px;border-color:var(--red);border-style:solid}.panel:before{top:-1px;left:-1px;border-width:2px 0 0 2px}.panel:after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}
-.panel-head{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #ffffff20;padding-bottom:18px;margin-bottom:23px}.panel h2{font-family:Orbitron,sans-serif;font-size:21px;margin:0 0 5px}.sub{font-size:13px;color:#aaa;letter-spacing:1px}.tag{font-family:Orbitron,sans-serif;font-size:10px;color:var(--gold);border:1px solid #ffb21c77;padding:7px}
-label{display:block;color:#ddd;font-size:15px;letter-spacing:1px;margin:0 0 8px}.field{margin-bottom:18px}.input-wrap{position:relative}
+.panel:before,.panel:after{content:"";position:absolute;width:35px;height:35px;border-color:var(--red);border-style:solid}
+.panel:before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.panel:after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}
+.panel-head{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #ffffff20;padding-bottom:18px;margin-bottom:23px}
+.panel h2{font-family:Orbitron,sans-serif;font-size:21px;margin:0 0 5px}
+.sub{font-size:13px;color:#aaa;letter-spacing:1px}
+.tag{font-family:Orbitron,sans-serif;font-size:10px;color:var(--gold);border:1px solid #ffb21c77;padding:7px}
+label{display:block;color:#ddd;font-size:15px;letter-spacing:1px;margin:0 0 8px}
+.field{margin-bottom:18px}
+.input-wrap{position:relative}
 input[type=text],input[type=number]{width:100%;background:#07090c;border:1px solid #ffffff28;color:white;padding:14px 15px;font:600 17px Rajdhani,sans-serif;outline:none;border-radius:0;transition:.2s}
 input:focus{border-color:var(--red);box-shadow:0 0 0 2px #ff3b1824}
-.upload{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px dashed #ffffff40;background:#07090c;padding:14px;cursor:pointer;transition:.2s}.upload:hover{border-color:var(--gold);background:#ffb21c09}.upload strong{display:block;font-size:16px}.upload small{color:#aaa;font-size:12px}.upload-icon{font-size:24px;color:var(--gold)}input[type=file]{display:none}
-.preview{display:none;max-width:100%;max-height:130px;margin-top:10px;border:1px solid #ffffff33;object-fit:contain}.terms{display:flex;gap:9px;color:#aaa;font-size:13px;align-items:flex-start;margin:4px 0 20px}.terms input{accent-color:var(--red);margin-top:4px}
-.submit{width:100%;border:0;background:linear-gradient(90deg,#ff3217,#ff6b1a);padding:16px;color:white;font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:13px;cursor:pointer;clip-path:polygon(0 0,95% 0,100% 25%,100% 100%,5% 100%,0 75%);transition:.2s}.submit:hover{filter:brightness(1.15);transform:translateY(-2px)}.submit:disabled{opacity:.65;cursor:wait;transform:none}.submit:active{transform:scale(.99)}
-.note{font-size:12px;color:#777;text-align:center;margin:13px 0 0}.message{display:none;margin-top:15px;padding:12px;border:1px solid #ffb21c77;color:#ffd18b;background:#ffb21c0b;font-size:15px}
-#fx{position:fixed;inset:0;pointer-events:none;z-index:4;overflow:hidden}.flash{position:absolute;inset:0;background:#fff;animation:flash .18s ease-out forwards}.spark{position:absolute;width:4px;height:4px;background:#ffb21c;box-shadow:0 0 12px #ff3b18;border-radius:50%;animation:spark .55s ease-out forwards}.tracer{position:absolute;height:2px;width:150px;background:linear-gradient(90deg,transparent,#ffbd5c,#ff3b18,transparent);transform:rotate(-18deg);animation:trace .32s ease-out forwards}
+.upload{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px dashed #ffffff40;background:#07090c;padding:14px;cursor:pointer;transition:.2s}
+.upload:hover{border-color:var(--gold);background:#ffb21c09}
+.upload strong{display:block;font-size:16px}
+.upload small{color:#aaa;font-size:12px}
+.upload-icon{font-size:24px;color:var(--gold)}
+input[type=file]{display:none}
+.preview{display:none;max-width:100%;max-height:130px;margin-top:10px;border:1px solid #ffffff33;object-fit:contain}
+.terms{display:flex;gap:9px;color:#aaa;font-size:13px;align-items:flex-start;margin:4px 0 20px}
+.terms input{accent-color:var(--red);margin-top:4px}
+.submit{width:100%;border:0;background:linear-gradient(90deg,#ff3217,#ff6b1a);padding:16px;color:white;font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:13px;cursor:pointer;clip-path:polygon(0 0,95% 0,100% 25%,100% 100%,5% 100%,0 75%);transition:.2s}
+.submit:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.submit:disabled{opacity:.65;cursor:wait;transform:none}
+.submit:active{transform:scale(.99)}
+.note{font-size:12px;color:#777;text-align:center;margin:13px 0 0}
+.message{display:none;margin-top:15px;padding:12px;border:1px solid #ffb21c77;color:#ffd18b;background:#ffb21c0b;font-size:15px}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:4;overflow:hidden}
+.flash{position:absolute;inset:0;background:#fff;animation:flash .18s ease-out forwards}
+.spark{position:absolute;width:4px;height:4px;background:#ffb21c;box-shadow:0 0 12px #ff3b18;border-radius:50%;animation:spark .55s ease-out forwards}
+.tracer{position:absolute;height:2px;width:150px;background:linear-gradient(90deg,transparent,#ffbd5c,#ff3b18,transparent);transform:rotate(-18deg);animation:trace .32s ease-out forwards}
 footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;font-size:12px;letter-spacing:1px}
-@keyframes pulse{50%{opacity:.25;box-shadow:0 0 2px #ff3b18}}@keyframes flash{0%{opacity:.6}100%{opacity:0}}@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}}@keyframes trace{0%{opacity:1;transform:translateX(-80px) rotate(-18deg)}100%{opacity:0;transform:translateX(180px) rotate(-18deg)}}
+@keyframes pulse{50%{opacity:.25;box-shadow:0 0 2px #ff3b18}}
+@keyframes flash{0%{opacity:.6}100%{opacity:0}}
+@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}}
+@keyframes trace{0%{opacity:1;transform:translateX(-80px) rotate(-18deg)}100%{opacity:0;transform:translateX(180px) rotate(-18deg)}}
 .music-control{position:fixed;right:22px;bottom:20px;z-index:8}
 #music-toggle{font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:1px;color:#fff;background:#090c11df;border:1px solid #ff4a27;padding:12px 14px;cursor:pointer;box-shadow:0 0 18px #ff3b1830}
 #music-toggle:hover{background:#ff3b18}
-@media(max-width:850px){.music-control{right:12px;bottom:12px}#music-toggle{padding:10px 12px}main{grid-template-columns:1fr;padding:45px 0;gap:35px}.hero h1{font-size:clamp(49px,13vw,76px)}.hero p{font-size:18px}.panel{max-width:600px;width:100%;margin:auto}header{padding:20px 5%}.status{font-size:10px}}
-
+@media(max-width:850px){
+ .music-control{right:12px;bottom:12px}
+ #music-toggle{padding:10px 12px}
+ main{grid-template-columns:1fr;padding:45px 0;gap:35px}
+ .hero h1{font-size:clamp(49px,13vw,76px)}
+ .hero p{font-size:18px}
+ .panel{max-width:600px;width:100%;margin:auto}
+ header{padding:20px 5%}
+ .status{font-size:10px}
+}
 #fireworks-layer{position:fixed;inset:0;z-index:11;pointer-events:none;overflow:hidden;display:none}
 #fireworks-layer.active{display:block}
 .firework-launch{position:absolute;bottom:-14px;width:4px;height:14px;border-radius:50%;background:#ffb21c;box-shadow:0 0 10px #ff6a19;animation:firework-rise var(--rise,1.1s) cubic-bezier(.15,.65,.3,1) forwards}
 .firework-burst{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--color,#ffb21c);box-shadow:0 0 10px var(--color,#ffb21c);animation:firework-burst .9s ease-out forwards}
 @keyframes firework-rise{0%{transform:translateY(0) scale(1);opacity:1}85%{opacity:1}100%{transform:translateY(calc(-1 * var(--travel,55vh))) scale(.6);opacity:.9}}
 @keyframes firework-burst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.15);opacity:0}}
-
-
 .confirmation-page{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(4,6,9,.94);backdrop-filter:blur(8px)}
 .confirmation-page.active{display:flex;animation:confirm-in .45s ease-out both}
 .confirmation-card{position:relative;width:min(600px,100%);padding:clamp(28px,6vw,55px);text-align:center;background:linear-gradient(145deg,#171a1f,#080a0d);border:1px solid #ff542e88;box-shadow:0 0 70px #ff3b1825}
 .confirmation-card:before,.confirmation-card:after{content:"";position:absolute;width:32px;height:32px;border-color:#ff3b18;border-style:solid}
-.confirmation-card:before{top:-1px;left:-1px;border-width:2px 0 0 2px}.confirmation-card:after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.confirmation-card:before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.confirmation-card:after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
 .confirmation-icon{width:68px;height:68px;margin:0 auto 22px;border:2px solid #ff542e;border-radius:50%;display:grid;place-items:center;color:#ffb21c;font-size:38px;box-shadow:0 0 25px #ff3b1844}
-.confirmation-card h2{font-family:Orbitron,sans-serif;font-size:clamp(38px,9vw,64px);margin:15px 0;color:white}.confirmation-card h2 span{color:#ff3b18}
+.confirmation-card h2{font-family:Orbitron,sans-serif;font-size:clamp(38px,9vw,64px);margin:15px 0;color:white}
+.confirmation-card h2 span{color:#ff3b18}
 .confirmation-message{font-family:Orbitron,sans-serif;letter-spacing:1.5px;color:#ffb21c;font-size:13px}
 .confirmation-sub{font-size:18px;color:#bbb;margin:16px 0 28px}
 @keyframes confirm-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-
 </style>
 </head>
 <body>
@@ -66,7 +107,10 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
 <div class="music-control" id="music-control">
   <button type="button" id="music-toggle" aria-label="Tap to start background music">♫ TAP TO START MUSIC</button>
 </div>
-<div class="video-shade"></div><div class="grain"></div><div id="fx"></div><div id="fireworks-layer" aria-hidden="true"></div>
+<div class="video-shade"></div>
+<div class="grain"></div>
+<div id="fx"></div>
+<div id="fireworks-layer" aria-hidden="true"></div>
 <div id="confirmation-page" class="confirmation-page" role="status" aria-live="polite">
   <div class="confirmation-card">
     <div class="confirmation-icon">✓</div>
@@ -77,19 +121,29 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
     <button type="button" id="back-to-form" class="cta">BACK TO REGISTRATION ↗</button>
   </div>
 </div>
-<header><div class="brand">BATTLE<span> ROYALE</span></div><div class="status"><i class="live-dot"></i> REGISTRATION OPEN</div></header>
+<header>
+  <div class="brand">BATTLE<span> ROYALE</span></div>
+  <div class="status"><i class="live-dot"></i> REGISTRATION OPEN</div>
+</header>
 <main>
 <section class="hero">
   <div class="kicker">// DROP IN. LOCK ON. DOMINATE.</div>
   <h1>ENTER THE <em>BATTLE</em></h1>
   <p>Your squad. Your skill. Your moment. Register for the next Free Fire showdown and prove you belong at the top.</p>
-  <div class="chips"><span class="chip">⚡ SOLO ENTRY</span><span class="chip">🎯 HEADSHOT READY</span><span class="chip">🔥 BATTLE MODE</span></div><div id="registration-stats" class="sub" aria-live="polite">CONNECTING TO REGISTRATION SERVER...</div>
+  <div class="chips">
+    <span class="chip">⚡ SOLO ENTRY</span>
+    <span class="chip">🎯 HEADSHOT READY</span>
+    <span class="chip">🔥 BATTLE MODE</span>
+  </div>
+  <div id="registration-stats" class="sub" aria-live="polite">CONNECTING TO REGISTRATION SERVER...</div>
   <a class="cta" href="#register">REGISTER NOW <span>↘</span></a>
 </section>
 <section class="panel" id="register">
-  <div class="panel-head"><div><h2>PLAYER ENLISTMENT</h2><div class="sub">CHOOSE SOLO OR SQUAD TO ENTER</div></div><div class="tag">BR // 01</div></div>
+  <div class="panel-head">
+    <div><h2>PLAYER ENLISTMENT</h2><div class="sub">CHOOSE SOLO OR SQUAD TO ENTER</div></div>
+    <div class="tag">BR // 01</div>
+  </div>
   <form id="reg-form">
-
     <div class="field mode-field">
       <label for="mode-select">MODE</label>
       <select id="mode-select" name="mode" required style="width:100%;background:#07090c;border:1px solid #ffffff28;color:white;padding:14px 15px;font:600 17px Rajdhani,sans-serif;outline:none;border-radius:0">
@@ -98,8 +152,14 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
       </select>
     </div>
     <div id="solo-fields">
-    <div class="field"><label for="player-name">PLAYER NAME</label><div class="input-wrap"><input id="player-name" name="playerName" type="text" placeholder="Enter your in-game / real name" required maxlength="50" autocomplete="name"></div></div>
-    <div class="field"><label for="ff-id">FREE FIRE UID</label><div class="input-wrap"><input id="ff-id" name="ffId" type="text" inputmode="numeric" placeholder="Enter your Free Fire ID" required maxlength="24" pattern="[0-9]+" title="Enter numbers only"></div></div>
+      <div class="field">
+        <label for="player-name">PLAYER NAME</label>
+        <div class="input-wrap"><input id="player-name" name="playerName" type="text" placeholder="Enter your in-game / real name" required maxlength="50" autocomplete="name"></div>
+      </div>
+      <div class="field">
+        <label for="ff-id">FREE FIRE UID</label>
+        <div class="input-wrap"><input id="ff-id" name="ffId" type="text" inputmode="numeric" placeholder="Enter your Free Fire ID" required maxlength="24" pattern="[0-9]+" title="Enter numbers only"></div>
+      </div>
     </div>
     <div id="squad-fields" style="display:none">
       <div class="field"><label for="player1-name">PLAYER 1 NAME</label><input id="player1-name" name="player1Name" type="text" placeholder="Enter player 1 name" maxlength="50"></div>
@@ -111,7 +171,15 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
       <div class="field"><label for="player4-name">PLAYER 4 NAME</label><input id="player4-name" name="player4Name" type="text" placeholder="Enter player 4 name" maxlength="50"></div>
       <div class="field"><label for="player4-id">PLAYER 4 FREE FIRE ID</label><input id="player4-id" name="player4Id" type="text" inputmode="numeric" placeholder="Enter player 4 Free Fire ID" maxlength="24" pattern="[0-9]+" title="Enter numbers only"></div>
     </div>
-    <div class="field"><label>PAYMENT PROOF</label><label class="upload" for="payment-proof"><span><strong id="file-name">Upload payment screenshot</strong><small>JPG, PNG or WEBP · Max 5 MB</small></span><span class="upload-icon">＋</span></label><input id="payment-proof" name="paymentProof" type="file" accept="image/png,image/jpeg,image/webp" required><img id="preview" class="preview" alt="Payment proof preview"></div>
+    <div class="field">
+      <label>PAYMENT PROOF</label>
+      <label class="upload" for="payment-proof">
+        <span><strong id="file-name">Upload payment screenshot</strong><small>JPG, PNG or WEBP · Max 5 MB</small></span>
+        <span class="upload-icon">＋</span>
+      </label>
+      <input id="payment-proof" name="paymentProof" type="file" accept="image/png,image/jpeg,image/webp" required>
+      <img id="preview" class="preview" alt="Payment proof preview">
+    </div>
     <label class="terms"><input type="checkbox" required><span>I confirm the details above are correct and the uploaded image is my payment proof.</span></label>
     <button class="submit" type="submit">CONFIRM ENTRY &nbsp; ▶</button>
     <div class="message" id="message" role="status"></div>
@@ -125,6 +193,7 @@ const bgMusic=document.getElementById('bg-music');
 const musicToggle=document.getElementById('music-toggle');
 let musicOn=false;
 let submissionSucceeded=false;
+
 async function enableMusic(){
  if(submissionSucceeded || !bgMusic)return;
  try{
@@ -139,6 +208,7 @@ async function enableMusic(){
   musicToggle.setAttribute('aria-label','Tap to start background music');
  }
 }
+
 musicToggle.addEventListener('click',async e=>{
  e.stopPropagation();
  if(musicOn){
@@ -150,22 +220,26 @@ musicToggle.addEventListener('click',async e=>{
   await enableMusic();
  }
 });
+
 bgMusic.addEventListener('play',()=>{
  musicOn=true;
  musicToggle.textContent='♫ MUSIC ON';
  musicToggle.setAttribute('aria-label','Turn background music off');
 });
+
 bgMusic.addEventListener('pause',()=>{
  musicOn=false;
  musicToggle.textContent='♫ MUSIC OFF';
  musicToggle.setAttribute('aria-label','Turn background music on');
 });
-// Browsers may block audible autoplay. Try on load and retry on any tap/click
-// anywhere on the page until the successful submission switches soundtracks.
+
+// Browsers may block audible autoplay. Try on load and retry on any tap/click.
 window.addEventListener('load',()=>enableMusic());
 document.addEventListener('pointerdown',()=>{if(!musicOn && !submissionSucceeded)enableMusic();});
+
 const fireworksLayer=document.getElementById('fireworks-layer');
 let fireworksTimer=null;
+
 function launchFirework(){
  if(!fireworksLayer || !fireworksLayer.classList.contains('active'))return;
  const rocket=document.createElement('i');
@@ -197,6 +271,7 @@ function launchFirework(){
   }
  },rise*1000);
 }
+
 function startFireworks(){
  if(!fireworksLayer)return;
  fireworksLayer.classList.add('active');
@@ -206,25 +281,68 @@ function startFireworks(){
 }
 
 const fx=document.getElementById('fx');
+
 function visualShot(headshot=false){
-  const flash=document.createElement('div');flash.className='flash';fx.appendChild(flash);setTimeout(()=>flash.remove(),250);
-  const count=headshot?32:15;
-  for(let i=0;i<count;i++){const s=document.createElement('i');s.className='spark';s.style.left=(headshot?50:Math.random()*100)+'%';s.style.top=(headshot?45:Math.random()*100)+'%';s.style.setProperty('--dx',(Math.random()*260-130)+'px');s.style.setProperty('--dy',(Math.random()*220-110)+'px');fx.appendChild(s);setTimeout(()=>s.remove(),650)}
-  const t=document.createElement('i');t.className='tracer';t.style.left=(Math.random()*65)+'%';t.style.top=(Math.random()*80+10)+'%';fx.appendChild(t);setTimeout(()=>t.remove(),400);
+ const flash=document.createElement('div');
+ flash.className='flash';
+ fx.appendChild(flash);
+ setTimeout(()=>flash.remove(),250);
+ const count=headshot?32:15;
+ for(let i=0;i<count;i++){
+  const s=document.createElement('i');
+  s.className='spark';
+  s.style.left=(headshot?50:Math.random()*100)+'%';
+  s.style.top=(headshot?45:Math.random()*100)+'%';
+  s.style.setProperty('--dx',(Math.random()*260-130)+'px');
+  s.style.setProperty('--dy',(Math.random()*220-110)+'px');
+  fx.appendChild(s);
+  setTimeout(()=>s.remove(),650);
+ }
+ const t=document.createElement('i');
+ t.className='tracer';
+ t.style.left=(Math.random()*65)+'%';
+ t.style.top=(Math.random()*80+10)+'%';
+ fx.appendChild(t);
+ setTimeout(()=>t.remove(),400);
 }
+
 // Web Audio synthesizes short effects locally; no external audio files needed.
 let audioCtx;
 function sound(type){
  try{
   audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
   if(audioCtx.state==='suspended')audioCtx.resume();
-  const now=audioCtx.currentTime, master=audioCtx.createGain();master.gain.setValueAtTime(type==='headshot'?.7:.42,now);master.gain.exponentialRampToValueAtTime(.001,now+(type==='headshot'?.48:.22));master.connect(audioCtx.destination);
-  const buffer=audioCtx.createBuffer(1,audioCtx.sampleRate*.18,audioCtx.sampleRate),data=buffer.getChannelData(0);
+  const now=audioCtx.currentTime;
+  const master=audioCtx.createGain();
+  master.gain.setValueAtTime(type==='headshot'?.7:.42,now);
+  master.gain.exponentialRampToValueAtTime(.001,now+(type==='headshot'?.48:.22));
+  master.connect(audioCtx.destination);
+  const buffer=audioCtx.createBuffer(1,audioCtx.sampleRate*.18,audioCtx.sampleRate);
+  const data=buffer.getChannelData(0);
   for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*Math.pow(1-i/data.length,3);
-  const noise=audioCtx.createBufferSource();noise.buffer=buffer;const filter=audioCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.setValueAtTime(type==='headshot'?1300:1900,now);filter.frequency.exponentialRampToValueAtTime(120,now+.18);noise.connect(filter);filter.connect(master);noise.start(now);
-  const osc=audioCtx.createOscillator();const gain=audioCtx.createGain();osc.type='sawtooth';osc.frequency.setValueAtTime(type==='headshot'?180:125,now);osc.frequency.exponentialRampToValueAtTime(35,now+.16);gain.gain.setValueAtTime(type==='headshot'?.7:.5,now);gain.gain.exponentialRampToValueAtTime(.001,now+.16);osc.connect(gain);gain.connect(master);osc.start(now);osc.stop(now+.18);
+  const noise=audioCtx.createBufferSource();
+  noise.buffer=buffer;
+  const filter=audioCtx.createBiquadFilter();
+  filter.type='lowpass';
+  filter.frequency.setValueAtTime(type==='headshot'?1300:1900,now);
+  filter.frequency.exponentialRampToValueAtTime(120,now+.18);
+  noise.connect(filter);
+  filter.connect(master);
+  noise.start(now);
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.type='sawtooth';
+  osc.frequency.setValueAtTime(type==='headshot'?180:125,now);
+  osc.frequency.exponentialRampToValueAtTime(35,now+.16);
+  gain.gain.setValueAtTime(type==='headshot'?.7:.5,now);
+  gain.gain.exponentialRampToValueAtTime(.001,now+.16);
+  osc.connect(gain);
+  gain.connect(master);
+  osc.start(now);
+  osc.stop(now+.18);
  }catch(e){}
 }
+
 const fieldTapSound=document.getElementById('field-tap-sound');
 function playFieldTapSound(){
  try{
@@ -237,20 +355,22 @@ function playFieldTapSound(){
  }catch(e){}
  visualShot(false);
 }
+
 document.addEventListener('click',e=>{
  const target=e.target;
  if(target && target.matches('input, select, textarea, button[type="checkbox"], label, .upload')){
-   // Ignore the main submit button so it doesn't trigger the field-tap sound.
-   if(target.closest('#reg-form') && !target.matches('.submit')){
-     playFieldTapSound();
-   }
+  if(target.closest('#reg-form') && !target.matches('.submit')){
+   playFieldTapSound();
+  }
  }
 });
+
 const modeSelect=document.getElementById('mode-select');
 const soloFields=document.getElementById('solo-fields');
 const squadFields=document.getElementById('squad-fields');
 const soloInputs=[...soloFields.querySelectorAll('input')];
 const squadInputs=[...squadFields.querySelectorAll('input')];
+
 function updateMode(){
  const squad=modeSelect.value==='squad';
  soloFields.style.display=squad?'none':'block';
@@ -258,18 +378,37 @@ function updateMode(){
  soloInputs.forEach(input=>{input.required=!squad;input.disabled=squad});
  squadInputs.forEach(input=>{input.required=squad;input.disabled=!squad});
 }
+
 modeSelect.addEventListener('change',updateMode);
 updateMode();
-const fileInput=document.getElementById('payment-proof'),preview=document.getElementById('preview'),fileName=document.getElementById('file-name');
-fileInput.addEventListener('change',()=>{const f=fileInput.files[0];if(!f)return;if(!['image/png','image/jpeg','image/webp'].includes(f.type)||f.size>5*1024*1024){alert('Please choose a PNG, JPG or WEBP image under 5 MB.');fileInput.value='';return}fileName.textContent=f.name;preview.src=URL.createObjectURL(f);preview.style.display='block'});
+
+const fileInput=document.getElementById('payment-proof');
+const preview=document.getElementById('preview');
+const fileName=document.getElementById('file-name');
+
+fileInput.addEventListener('change',()=>{
+ const f=fileInput.files[0];
+ if(!f)return;
+ if(!['image/png','image/jpeg','image/webp'].includes(f.type)||f.size>5*1024*1024){
+  alert('Please choose a PNG, JPG or WEBP image under 5 MB.');
+  fileInput.value='';
+  return;
+ }
+ fileName.textContent=f.name;
+ preview.src=URL.createObjectURL(f);
+ preview.style.display='block';
+});
+
 const API_BASE='https://battle-royale-registration-system.onrender.com';
 const formMessage=document.getElementById('message');
+
 function showFormMessage(text,isError=false){
  formMessage.textContent=text;
  formMessage.style.display='block';
  formMessage.style.borderColor=isError?'#ff5a5a':'#ffb21c77';
  formMessage.style.color=isError?'#ffb0b0':'#ffd18b';
 }
+
 async function refreshRegistrationStats(){
  try{
   const response=await fetch(`${API_BASE}/api/stats`);
@@ -277,9 +416,13 @@ async function refreshRegistrationStats(){
   const stats=await response.json();
   const el=document.getElementById('registration-stats');
   if(el)el.textContent=`${stats.total} ENTRIES LOGGED · ${stats.solo} SOLO · ${stats.squad} SQUAD`;
- }catch(err){ /* Stats are optional; the form can still be used. */ }
+ }catch(err){
+  // Stats are optional; the form can still be used.
+ }
 }
+
 refreshRegistrationStats();
+
 document.getElementById('reg-form').addEventListener('submit',async e=>{
  e.preventDefault();
  const form=e.currentTarget;
@@ -289,46 +432,56 @@ document.getElementById('reg-form').addEventListener('submit',async e=>{
  submitButton.disabled=true;
  submitButton.textContent='SENDING ENTRY...';
  formMessage.style.display='none';
+
  try{
   const payload=new FormData(form);
-  const response=await fetch(`${API_BASE}/api/registrations`,{method:'POST',body:payload});
+  const response=await fetch(`${API_BASE}/api/registrations`,{
+   method:'POST',
+   body:payload
+  });
   const result=await response.json().catch(()=>({error:'Unexpected response from the server.'}));
-  if(!response.ok || !result.ok)throw new Error(result.error||'Registration could not be saved. Please try again.');
+  if(!response.ok || !result.ok){
+   throw new Error(result.error||'Registration could not be saved. Please try again.');
+  }
+
   submissionSucceeded=true;
-  if(bgMusic){bgMusic.pause();bgMusic.currentTime=0;}
-  visualShot(true);startFireworks();
+  if(bgMusic){
+   bgMusic.pause();
+   bgMusic.currentTime=0;
+  }
+
+  visualShot(true);
+  startFireworks();
+
   const successLoop=document.getElementById('success-loop-sound');
-  if(successLoop){try{successLoop.pause();successLoop.currentTime=0;successLoop.loop=false;successLoop.volume=.42;await successLoop.play();}catch(err){}}
+  if(successLoop){
+   try{
+    successLoop.pause();
+    successLoop.currentTime=0;
+    successLoop.loop=false;
+    successLoop.volume=.42;
+    await successLoop.play();
+   }catch(err){}
+  }
+
   const confirmation=document.getElementById('confirmation-page');
   confirmation.querySelector('.confirmation-message').textContent=`REGISTRATION CONFIRMED · ${result.registrationCode}`;
   confirmation.querySelector('.confirmation-sub').textContent='Save your registration code. The tournament team can use it to verify your entry.';
   confirmation.classList.add('active');
 
-document.getElementById('back-to-form').addEventListener('click',()=>{
-  stopFireworks();
+  document.getElementById('back-to-form').addEventListener('click',()=>{
+   confirmation.classList.remove('active');
+   document.getElementById('register').scrollIntoView({behavior:'smooth',block:'start'});
+   form.reset();
+   document.getElementById('preview').style.display='none';
+   document.getElementById('file-name').textContent='Upload payment screenshot';
+   updateMode();
+   submissionSucceeded=false;
+   refreshRegistrationStats();
+  },{once:true});
 
-  const confirmation = document.getElementById('confirmation-page');
-  confirmation.classList.remove('active');
-
-  document.getElementById('register').scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-
-  // Keep all submitted details visible, but make them read-only.
-  document.querySelectorAll(
-    '#reg-form input, #reg-form select, #reg-form textarea'
-  ).forEach(input => {
-    if (input.type === 'file' || input.type === 'checkbox') {
-      input.disabled = true;
-    } else {
-      input.readOnly = true;
-      input.disabled = true;
-    }
-  });
-
-  document.querySelector('.submit').disabled = true;
-});
+  requestAnimationFrame(()=>setTimeout(()=>startFireworks(),180));
+  refreshRegistrationStats();
 
  }catch(err){
   showFormMessage(err.message||'Unable to submit registration. Please check your connection and try again.',true);
@@ -338,4 +491,5 @@ document.getElementById('back-to-form').addEventListener('click',()=>{
  }
 });
 </script>
-</body></html>
+</body>
+</html>
