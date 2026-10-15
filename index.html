@@ -303,18 +303,50 @@ document.getElementById('reg-form').addEventListener('submit',async e=>{
   confirmation.querySelector('.confirmation-message').textContent=`REGISTRATION CONFIRMED · ${result.registrationCode}`;
   confirmation.querySelector('.confirmation-sub').textContent='Save your registration code. The tournament team can use it to verify your entry.';
   confirmation.classList.add('active');
-  document.getElementById('back-to-form').addEventListener('click',()=>{
-   confirmation.classList.remove('active');
-   document.getElementById('register').scrollIntoView({behavior:'smooth',block:'start'});
-   form.reset();
-   document.getElementById('preview').style.display='none';
-   document.getElementById('file-name').textContent='Upload payment screenshot';
-   updateMode();
-   submissionSucceeded=false;
-   refreshRegistrationStats();
-  },{once:true});
-  requestAnimationFrame(()=>setTimeout(()=>startFireworks(),180));
-  refreshRegistrationStats();
+
+document.getElementById('back-to-form').addEventListener('click',()=>{
+  stopFireworks();
+
+  const confirmation = document.getElementById('confirmation-page');
+  confirmation.classList.remove('active');
+
+  document.getElementById('register').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+
+  // Keep all submitted details visible, but make them read-only.
+  document.querySelectorAll(
+    '#reg-form input, #reg-form select, #reg-form textarea'
+  ).forEach(input => {
+    if (input.type === 'file' || input.type === 'checkbox') {
+      input.disabled = true;
+    } else {
+      input.readOnly = true;
+      input.disabled = true;
+    }
+  });
+
+  document.querySelector('.submit').disabled = true;
+});
+```
+
+**Important:** This code assumes a `stopFireworks()` function exists. We must verify that before committing. Otherwise, the button could throw an error.
+
+### Before saving
+
+Search `index.html` for:
+
+```javascript
+function stopFireworks
+```
+
+Tell me whether you find it.
+
+- If it exists, we'll verify its behavior.
+- If it doesn't, I'll give you the safe code to stop the fireworks and their sound.
+
+We'll then handle the Squad fields separately so the Solo registration remains intact.
  }catch(err){
   showFormMessage(err.message||'Unable to submit registration. Please check your connection and try again.',true);
  }finally{
