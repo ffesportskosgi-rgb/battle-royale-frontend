@@ -1,156 +1,98 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BATTLE ROYALE — Free Fire Tournament</title>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
-
 :root{--red:#ff3b18;--gold:#ffb21c;--ink:#07090c;--glass:rgba(9,12,17,.82)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:#07090c;color:#fff;font-family:Rajdhani,Arial,sans-serif;min-height:100vh;overflow-x:hidden}
-#bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;filter:brightness(.35) saturate(1.35)}
-.video-shade{position:fixed;inset:0;z-index:-2;background:linear-gradient(110deg,rgba(0,0,0,.93) 0%,rgba(15,8,5,.68) 48%,rgba(80,14,3,.28) 100%),linear-gradient(0deg,#07090c 0%,transparent 65%)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#07090c;color:#fff;font-family:Rajdhani,Arial,sans-serif;min-height:100vh;overflow-x:hidden;isolation:isolate}
+#bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(.35) saturate(1.35)}
+.video-shade{position:fixed;inset:0;z-index:-1;background:linear-gradient(110deg,rgba(0,0,0,.93) 0%,rgba(15,8,5,.68) 48%,rgba(80,14,3,.28) 100%),linear-gradient(0deg,#07090c 0%,transparent 65%)}
 .grain{position:fixed;inset:0;pointer-events:none;z-index:5;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
 header{display:flex;align-items:center;justify-content:space-between;padding:24px clamp(20px,6vw,90px);border-bottom:1px solid #ffffff1b}
-.brand{font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:18px}
-.brand span{color:var(--red)}
-.status{font-size:13px;letter-spacing:2px;color:#ffb5a6}
-.live-dot{display:inline-block;width:7px;height:7px;background:#ff3b18;border-radius:50%;box-shadow:0 0 12px #ff3b18;margin-right:8px;animation:pulse 1s infinite}
+.brand{font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:18px}.brand span{color:var(--red)}.status{font-size:13px;letter-spacing:2px;color:#ffb5a6}.live-dot{display:inline-block;width:7px;height:7px;background:#ff3b18;border-radius:50%;box-shadow:0 0 12px #ff3b18;margin-right:8px;animation:pulse 1s infinite}
 main{width:min(1180px,90%);margin:auto;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,6vw,85px);align-items:center;padding:55px 0 70px;min-height:calc(100vh - 80px)}
-.kicker{font-family:Orbitron,sans-serif;color:var(--gold);letter-spacing:4px;font-size:12px}
-.hero h1{font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(48px,7vw,92px);line-height:.93;letter-spacing:-3px;margin:20px 0;text-transform:uppercase;text-shadow:4px 4px 0 #6d1609}
+.kicker{font-family:Orbitron,sans-serif;color:var(--gold);letter-spacing:4px;font-size:12px}.hero h1{font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(48px,7vw,92px);line-height:.93;letter-spacing:-3px;margin:20px 0;text-transform:uppercase;text-shadow:4px 4px 0 #6d1609}
 .hero h1 em{font-style:normal;color:var(--red);display:block;-webkit-text-stroke:1px #ff8b4e}
-.hero p{font-size:20px;line-height:1.4;color:#d0d0d0;max-width:470px}
-.chips{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}
-.chip{border:1px solid #ffffff30;padding:8px 12px;font-size:12px;letter-spacing:1.5px;background:#ffffff09;clip-path:polygon(0 0,100% 0,100% 72%,88% 100%,0 100%)}
-.cta{display:inline-flex;align-items:center;gap:10px;color:white;text-decoration:none;background:var(--red);padding:14px 21px;font-family:Orbitron,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.4px;box-shadow:5px 5px 0 #741b0b;transition:.2s;border:0;cursor:pointer}
-.cta:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #741b0b}
+.hero p{font-size:20px;line-height:1.4;color:#d0d0d0;max-width:470px}.chips{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0}.chip{border:1px solid #ffffff30;padding:8px 12px;font-size:12px;letter-spacing:1.5px;background:#ffffff09;clip-path:polygon(0 0,100% 0,100% 72%,88% 100%,0 100%)}
+.cta{display:inline-flex;align-items:center;gap:10px;color:white;text-decoration:none;background:var(--red);padding:14px 21px;font-family:Orbitron,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.4px;box-shadow:5px 5px 0 #741b0b;transition:.2s}.cta:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #741b0b}
 .panel{position:relative;background:linear-gradient(145deg,rgba(25,28,32,.94),rgba(6,8,11,.94));border:1px solid #ffffff25;padding:clamp(22px,3vw,34px);box-shadow:0 20px 80px #0009}
-.panel:before,.panel:after{content:"";position:absolute;width:35px;height:35px;border-color:var(--red);border-style:solid}
-.panel:before{top:-1px;left:-1px;border-width:2px 0 0 2px}
-.panel:after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}
-.panel-head{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #ffffff20;padding-bottom:18px;margin-bottom:23px}
-.panel h2{font-family:Orbitron,sans-serif;font-size:21px;margin:0 0 5px}
-.sub{font-size:13px;color:#aaa;letter-spacing:1px}
-.tag{font-family:Orbitron,sans-serif;font-size:10px;color:var(--gold);border:1px solid #ffb21c77;padding:7px}
-label{display:block;color:#ddd;font-size:15px;letter-spacing:1px;margin:0 0 8px}
-.field{margin-bottom:18px}
-.input-wrap{position:relative}
+.panel:before,.panel:after{content:"";position:absolute;width:35px;height:35px;border-color:var(--red);border-style:solid}.panel:before{top:-1px;left:-1px;border-width:2px 0 0 2px}.panel:after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}
+.panel-head{display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid #ffffff20;padding-bottom:18px;margin-bottom:23px}.panel h2{font-family:Orbitron,sans-serif;font-size:21px;margin:0 0 5px}.sub{font-size:13px;color:#aaa;letter-spacing:1px}.tag{font-family:Orbitron,sans-serif;font-size:10px;color:var(--gold);border:1px solid #ffb21c77;padding:7px}
+label{display:block;color:#ddd;font-size:15px;letter-spacing:1px;margin:0 0 8px}.field{margin-bottom:18px}.input-wrap{position:relative}
 input[type="text"],input[type="tel"],select{display:block;width:100%;height:51px;background:#07090c;border:1px solid #ffffff28;color:white;padding:14px 15px;font-family:Rajdhani,Arial,sans-serif;font-size:17px;font-weight:600;line-height:normal;outline:none;border-radius:0;transition:border-color .2s,box-shadow .2s;appearance:none;-webkit-appearance:none}
 input[type="text"]::placeholder,input[type="tel"]::placeholder{color:#777;opacity:1}
 input[type="text"]:focus,input[type="tel"]:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 2px #ff3b1824}
 input:disabled,select:disabled{opacity:1;color:#ddd;cursor:not-allowed}
 input:focus{border-color:var(--red);box-shadow:0 0 0 2px #ff3b1824}
-.terms{display:flex;gap:9px;color:#aaa;font-size:13px;align-items:flex-start;margin:4px 0 20px}
-.terms input{accent-color:var(--red);margin-top:4px}
-.submit{width:100%;border:0;background:linear-gradient(90deg,#ff3217,#ff6b1a);padding:16px;color:white;font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:13px;cursor:pointer;clip-path:polygon(0 0,95% 0,100% 25%,100% 100%,5% 100%,0 75%);transition:.2s}
-.submit:hover{filter:brightness(1.15);transform:translateY(-2px)}
-.submit:disabled{opacity:.65;cursor:wait;transform:none}
-.submit:active{transform:scale(.99)}
-.note{font-size:12px;color:#777;text-align:center;margin:13px 0 0}
-.message{display:none;margin-top:15px;padding:12px;border:1px solid #ffb21c77;color:#ffd18b;background:#ffb21c0b;font-size:15px}
-#fx{position:fixed;inset:0;pointer-events:none;z-index:4;overflow:hidden}
-.flash{position:absolute;inset:0;background:#fff;animation:flash .18s ease-out forwards}
-.spark{position:absolute;width:4px;height:4px;background:#ffb21c;box-shadow:0 0 12px #ff3b18;border-radius:50%;animation:spark .55s ease-out forwards}
-.tracer{position:absolute;height:2px;width:150px;background:linear-gradient(90deg,transparent,#ffbd5c,#ff3b18,transparent);transform:rotate(-18deg);animation:trace .32s ease-out forwards}
+.upload{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px dashed #ffffff40;background:#07090c;padding:14px;cursor:pointer;transition:.2s}.upload:hover{border-color:var(--gold);background:#ffb21c09}.upload strong{display:block;font-size:16px}.upload small{color:#aaa;font-size:12px}.upload-icon{font-size:24px;color:var(--gold)}input[type=file]{display:none}
+.preview{display:none;max-width:100%;max-height:130px;margin-top:10px;border:1px solid #ffffff33;object-fit:contain}.terms{display:flex;gap:9px;color:#aaa;font-size:13px;align-items:flex-start;margin:4px 0 20px}.terms input{accent-color:var(--red);margin-top:4px}
+.submit{width:100%;border:0;background:linear-gradient(90deg,#ff3217,#ff6b1a);padding:16px;color:white;font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:2px;font-size:13px;cursor:pointer;clip-path:polygon(0 0,95% 0,100% 25%,100% 100%,5% 100%,0 75%);transition:.2s}.submit:hover{filter:brightness(1.15);transform:translateY(-2px)}.submit:disabled{opacity:.65;cursor:wait;transform:none}.submit:active{transform:scale(.99)}
+.note{font-size:12px;color:#777;text-align:center;margin:13px 0 0}.message{display:none;margin-top:15px;padding:12px;border:1px solid #ffb21c77;color:#ffd18b;background:#ffb21c0b;font-size:15px}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:4;overflow:hidden}.flash{position:absolute;inset:0;background:#fff;animation:flash .18s ease-out forwards}.spark{position:absolute;width:4px;height:4px;background:#ffb21c;box-shadow:0 0 12px #ff3b18;border-radius:50%;animation:spark .55s ease-out forwards}.tracer{position:absolute;height:2px;width:150px;background:linear-gradient(90deg,transparent,#ffbd5c,#ff3b18,transparent);transform:rotate(-18deg);animation:trace .32s ease-out forwards}
 footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;font-size:12px;letter-spacing:1px}
-@keyframes pulse{50%{opacity:.25;box-shadow:0 0 2px #ff3b18}}
-@keyframes flash{0%{opacity:.6}100%{opacity:0}}
-@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}}
-@keyframes trace{0%{opacity:1;transform:translateX(-80px) rotate(-18deg)}100%{opacity:0;transform:translateX(180px) rotate(-18deg)}}
+@keyframes pulse{50%{opacity:.25;box-shadow:0 0 2px #ff3b18}}@keyframes flash{0%{opacity:.6}100%{opacity:0}}@keyframes spark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}}@keyframes trace{0%{opacity:1;transform:translateX(-80px) rotate(-18deg)}100%{opacity:0;transform:translateX(180px) rotate(-18deg)}}
 .music-control{position:fixed;right:22px;bottom:20px;z-index:8}
 #music-toggle{font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:1px;color:#fff;background:#090c11df;border:1px solid #ff4a27;padding:12px 14px;cursor:pointer;box-shadow:0 0 18px #ff3b1830}
 #music-toggle:hover{background:#ff3b18}
 @media(max-width:850px){.music-control{right:12px;bottom:12px}#music-toggle{padding:10px 12px}main{grid-template-columns:1fr;padding:45px 0;gap:35px}.hero h1{font-size:clamp(49px,13vw,76px)}.hero p{font-size:18px}.panel{max-width:600px;width:100%;margin:auto}header{padding:20px 5%}.status{font-size:10px}}
+
 #fireworks-layer{position:fixed;inset:0;z-index:11;pointer-events:none;overflow:hidden;display:none}
 #fireworks-layer.active{display:block}
 .firework-launch{position:absolute;bottom:-14px;width:4px;height:14px;border-radius:50%;background:#ffb21c;box-shadow:0 0 10px #ff6a19;animation:firework-rise var(--rise,1.1s) cubic-bezier(.15,.65,.3,1) forwards}
 .firework-burst{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--color,#ffb21c);box-shadow:0 0 10px var(--color,#ffb21c);animation:firework-burst .9s ease-out forwards}
 @keyframes firework-rise{0%{transform:translateY(0) scale(1);opacity:1}85%{opacity:1}100%{transform:translateY(calc(-1 * var(--travel,55vh))) scale(.6);opacity:.9}}
 @keyframes firework-burst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(.15);opacity:0}}
+
+
 .confirmation-page{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(4,6,9,.94);backdrop-filter:blur(8px);overflow-y:auto}
 .confirmation-page.active{display:flex;animation:confirm-in .45s ease-out both}
 .confirmation-card{position:relative;width:min(600px,100%);padding:clamp(28px,6vw,55px);text-align:center;background:linear-gradient(145deg,#171a1f,#080a0d);border:1px solid #ff542e88;box-shadow:0 0 70px #ff3b1825}
 .confirmation-card:before,.confirmation-card:after{content:"";position:absolute;width:32px;height:32px;border-color:#ff3b18;border-style:solid}
-.confirmation-card:before{top:-1px;left:-1px;border-width:2px 0 0 2px}
-.confirmation-card:after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.confirmation-card:before{top:-1px;left:-1px;border-width:2px 0 0 2px}.confirmation-card:after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
 .confirmation-icon{width:68px;height:68px;margin:0 auto 22px;border:2px solid #ff542e;border-radius:50%;display:grid;place-items:center;color:#ffb21c;font-size:38px;box-shadow:0 0 25px #ff3b1844}
-.confirmation-card h2{font-family:Orbitron,sans-serif;font-size:clamp(38px,9vw,64px);margin:15px 0;color:white}
-.confirmation-card h2 span{color:#ff3b18}
-.confirmation-message{font-family:Orbitron,sans-serif;letter-spacing:1.5px;color:#ffb21c;font-size:13px;overflow-wrap:anywhere}
-.confirmation-sub{font-size:18px;color:#bbb;margin:16px 0 28px;line-height:1.5}
-#assigned-team-label{font-family:Orbitron,sans-serif;font-size:clamp(25px,6vw,40px);font-weight:900;letter-spacing:2px;color:#ffb21c;margin:18px 0 8px;overflow-wrap:anywhere}
-#team-number-note{font-size:16px;line-height:1.5;color:#ffd18b;border:1px solid #ffb21c66;background:#ffb21c0d;padding:14px;margin:0 0 24px}
+.confirmation-card h2{font-family:Orbitron,sans-serif;font-size:clamp(38px,9vw,64px);margin:15px 0;color:white}.confirmation-card h2 span{color:#ff3b18}
+.confirmation-message{font-family:Orbitron,sans-serif;letter-spacing:1.5px;color:#ffb21c;font-size:13px}
+.confirmation-sub{font-size:18px;color:#bbb;margin:16px 0 20px;line-height:1.5}\n#assigned-team-label{font-family:Orbitron,sans-serif;font-size:clamp(25px,6vw,40px);font-weight:900;letter-spacing:2px;color:#ffb21c;margin:18px 0 8px;overflow-wrap:anywhere}\n#team-number-note{font-size:15px;line-height:1.5;color:#ffd18b;border:1px solid #ffb21c66;background:#ffb21c0d;padding:14px;margin:0 0 24px}
 @keyframes confirm-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
-input[type="text"],input[type="tel"],input[type="number"]{background-color:#07090c!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-input[type="text"]::placeholder,input[type="tel"]::placeholder{color:#888!important;-webkit-text-fill-color:#888!important}
-input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:#fff!important;-webkit-box-shadow:0 0 0 1000px #07090c inset!important}
+
 </style>
 </head>
-
 <body>
 <video id="bg-video" autoplay muted loop playsinline poster="battle-bg.jpg">
   <source src="freefire-bg.mp4" type="video/mp4">
 </video>
 <audio id="bg-music" src="background-music.mp3" loop preload="auto" autoplay></audio>
-<audio id="field-tap-sound" src="first_sound.mp3" preload="auto"></audio>
+<audio id="field-tap-sound" src="field-click.mp3" preload="auto"></audio>
 <audio id="success-loop-sound" src="success-loop.mp3" preload="auto"></audio>
-
 <div class="music-control" id="music-control">
   <button type="button" id="music-toggle" aria-label="Tap to start background music">♫ TAP TO START MUSIC</button>
 </div>
-
-<div class="video-shade"></div>
-<div class="grain"></div>
-<div id="fx"></div>
-<div id="fireworks-layer" aria-hidden="true"></div>
-
+<div class="video-shade"></div><div class="grain"></div><div id="fx"></div><div id="fireworks-layer" aria-hidden="true"></div>
 <div id="confirmation-page" class="confirmation-page" role="status" aria-live="polite">
   <div class="confirmation-card">
     <div class="confirmation-icon">✓</div>
     <div class="kicker">// ENTRY STATUS</div>
     <h2>YOU'RE <span>IN!</span></h2>
     <p class="confirmation-message">REGISTRATION DETAILS VALIDATED</p>
-    <p id="assigned-team-label">YOUR NUMBER</p>
     <p class="confirmation-sub">Get ready for the battlefield. Let the celebration begin!</p>
-    <p id="team-number-note">Remember your assigned number! Keep it safe, as you may need it for tournament updates and team identification. Do not lose it!</p>
     <button type="button" id="back-to-form" class="cta">BACK TO REGISTRATION ↗</button>
   </div>
 </div>
-
-<header>
-  <div class="brand">BATTLE<span> ROYALE</span></div>
-  <div class="status"><i class="live-dot"></i> REGISTRATION OPEN</div>
-</header>
-
+<header><div class="brand">BATTLE<span> ROYALE</span></div><div class="status"><i class="live-dot"></i> REGISTRATION OPEN</div></header>
 <main>
 <section class="hero">
   <div class="kicker">// DROP IN. LOCK ON. DOMINATE.</div>
   <h1>ENTER THE <em>BATTLE</em></h1>
   <p>Your squad. Your skill. Your moment. Register for the next Free Fire showdown and prove you belong at the top.</p>
-  <div class="chips">
-    <span class="chip">⚡ SOLO ENTRY</span>
-    <span class="chip">🎯 HEADSHOT READY</span>
-    <span class="chip">🔥 BATTLE MODE</span>
-  </div>
-  <div id="registration-stats" class="sub" aria-live="polite">CONNECTING TO REGISTRATION SERVER...</div>
+  <div class="chips"><span class="chip">⚡ SOLO ENTRY</span><span class="chip">🎯 HEADSHOT READY</span><span class="chip">🔥 BATTLE MODE</span></div><div id="registration-stats" class="sub" aria-live="polite">CONNECTING TO REGISTRATION SERVER...</div>
   <a class="cta" href="#register">REGISTER NOW <span>↘</span></a>
 </section>
-
 <section class="panel" id="register">
-  <div class="panel-head">
-    <div>
-      <h2>PLAYER ENLISTMENT</h2>
-      <div class="sub">CHOOSE SOLO OR SQUAD TO ENTER</div>
-    </div>
-    <div class="tag">BR // 01</div>
-  </div>
-
+  <div class="panel-head"><div><h2>PLAYER ENLISTMENT</h2><div class="sub">CHOOSE SOLO OR SQUAD TO ENTER</div></div><div class="tag">BR // 01</div></div>
   <form id="reg-form">
+
     <div class="field mode-field">
       <label for="mode-select">MODE</label>
       <select id="mode-select" name="mode" required style="width:100%;background:#07090c;border:1px solid #ffffff28;color:white;padding:14px 15px;font:600 17px Rajdhani,sans-serif;outline:none;border-radius:0">
@@ -158,405 +100,271 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
         <option value="squad">Squad</option>
       </select>
     </div>
-
     <div id="solo-fields">
-      <div class="field">
-        <label for="player-name">PLAYER NAME</label>
-        <div class="input-wrap">
-          <input id="player-name" name="playerName" type="text" placeholder="Enter your name" required maxlength="50" autocomplete="name">
-        </div>
-      </div>
-      <div class="field">
-        <label for="player-mobile">MOBILE NUMBER</label>
-        <div class="input-wrap">
-          <input id="player-mobile" name="playerMobile" type="tel" inputmode="numeric" placeholder="Enter your 10-digit mobile number" required maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" autocomplete="tel">
-        </div>
-      </div>
+      <div class="field"><label for="player-name">PLAYER NAME</label><div class="input-wrap"><input id="player-name" name="playerName" type="text" placeholder="Enter your name" required maxlength="50" autocomplete="name"></div></div>
+      <div class="field"><label for="player-mobile">MOBILE NUMBER</label><div class="input-wrap"><input id="player-mobile" name="playerMobile" type="tel" inputmode="numeric" placeholder="Enter your 10-digit mobile number" required maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" autocomplete="tel"></div></div>
     </div>
-
     <div id="squad-fields" style="display:none">
-      <div class="field">
-        <label for="team-name">TEAM NAME</label>
-        <div class="input-wrap">
-          <input id="team-name" name="teamName" type="text" placeholder="Enter your team name" required maxlength="50">
-        </div>
-      </div>
-      <div class="field">
-        <label for="team-head">TEAM HEAD NAME</label>
-        <div class="input-wrap">
-          <input id="team-head" name="teamHead" type="text" placeholder="Enter team head name" required maxlength="50">
-        </div>
-      </div>
-      <div class="field">
-        <label for="team-head-mobile">TEAM HEAD MOBILE NUMBER</label>
-        <div class="input-wrap">
-          <input id="team-head-mobile" name="teamHeadMobile" type="tel" inputmode="numeric" placeholder="Enter 10-digit mobile number" required maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" autocomplete="tel">
-        </div>
-      </div>
+      <div class="field"><label for="team-name">TEAM NAME</label><div class="input-wrap"><input id="team-name" name="teamName" type="text" placeholder="Enter your team name" required maxlength="50"></div></div>
+      <div class="field"><label for="team-head">TEAM HEAD NAME</label><div class="input-wrap"><input id="team-head" name="teamHead" type="text" placeholder="Enter team head name" required maxlength="50"></div></div>
+      <div class="field"><label for="team-head-mobile">TEAM HEAD MOBILE NUMBER</label><div class="input-wrap"><input id="team-head-mobile" name="teamHeadMobile" type="tel" inputmode="numeric" placeholder="Enter 10-digit mobile number" required maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" autocomplete="tel"></div></div>
     </div>
-
-    <label class="terms">
-      <input id="confirmed" name="detailsConfirmed" type="checkbox" value="true" required>
-      <span>I confirm that the details provided are correct.</span>
-    </label>
-
+    <label class="terms"><input id="details-confirmed" name="detailsConfirmed" type="checkbox" value="true" required><span>I confirm that the details provided are correct.</span></label>
     <button class="submit" type="submit">CONFIRM ENTRY &nbsp; ▶</button>
     <div class="message" id="message" role="status"></div>
-    <p class="note">Secure registration · Payment proof is uploaded privately.</p>
+    <p class="note">Secure registration · No payment proof required.</p>
   </form>
 </section>
 </main>
-
 <footer>UNOFFICIAL COMMUNITY TOURNAMENT · FREE FIRE IS A TRADEMARK OF ITS RESPECTIVE OWNER</footer>
-
 <script>
-const bgMusic = document.getElementById('bg-music');
-const musicToggle = document.getElementById('music-toggle');
-let musicOn = false;
-let submissionSucceeded = false;
-
-async function enableMusic() {
-  if (submissionSucceeded || !bgMusic) return;
-
-  try {
-    bgMusic.volume = .38;
-    await bgMusic.play();
-    musicOn = true;
-    musicToggle.textContent = '♫ MUSIC ON';
-    musicToggle.setAttribute('aria-label', 'Turn background music off');
-  } catch (e) {
-    musicOn = false;
-    musicToggle.textContent = '♫ TAP TO START MUSIC';
-    musicToggle.setAttribute('aria-label', 'Tap to start background music');
+const bgMusic=document.getElementById('bg-music');
+const musicToggle=document.getElementById('music-toggle');
+let musicOn=false;
+let submissionSucceeded=false;
+let registrationLocked=false;
+async function enableMusic(){
+ if(submissionSucceeded || !bgMusic)return;
+ try{
+  bgMusic.volume=.38;
+  await bgMusic.play();
+  musicOn=true;
+  musicToggle.textContent='♫ MUSIC ON';
+  musicToggle.setAttribute('aria-label','Turn background music off');
+ }catch(e){
+  musicOn=false;
+  musicToggle.textContent='♫ TAP TO START MUSIC';
+  musicToggle.setAttribute('aria-label','Tap to start background music');
+ }
+}
+musicToggle.addEventListener('click',async e=>{
+ e.stopPropagation();
+ if(musicOn){
+  bgMusic.pause();
+  musicOn=false;
+  musicToggle.textContent='♫ MUSIC OFF';
+  musicToggle.setAttribute('aria-label','Turn background music on');
+ }else{
+  await enableMusic();
+ }
+});
+bgMusic.addEventListener('play',()=>{
+ musicOn=true;
+ musicToggle.textContent='♫ MUSIC ON';
+ musicToggle.setAttribute('aria-label','Turn background music off');
+});
+bgMusic.addEventListener('pause',()=>{
+ musicOn=false;
+ musicToggle.textContent='♫ MUSIC OFF';
+ musicToggle.setAttribute('aria-label','Turn background music on');
+});
+// Browsers may block audible autoplay. Try on load and retry on any tap/click
+// anywhere on the page until the successful submission switches soundtracks.
+window.addEventListener('load',()=>enableMusic());
+document.addEventListener('pointerdown',()=>{if(!musicOn && !submissionSucceeded)enableMusic();});
+const fireworksLayer=document.getElementById('fireworks-layer');
+let fireworksTimer=null;
+function launchFirework(){
+ if(!fireworksLayer || !fireworksLayer.classList.contains('active'))return;
+ const rocket=document.createElement('i');
+ rocket.className='firework-launch';
+ const x=8+Math.random()*84;
+ const travel=28+Math.random()*42;
+ const rise=0.65+Math.random()*0.7;
+ rocket.style.left=x+'%';
+ rocket.style.setProperty('--travel',travel+'vh');
+ rocket.style.setProperty('--rise',rise+'s');
+ fireworksLayer.appendChild(rocket);
+ setTimeout(()=>{
+  if(rocket.isConnected)rocket.remove();
+  if(!fireworksLayer.classList.contains('active'))return;
+  const colors=['#ff3b18','#ffb21c','#fff1b8','#ff6b35','#f5f5f5'];
+  const color=colors[Math.floor(Math.random()*colors.length)];
+  for(let i=0;i<30;i++){
+   const spark=document.createElement('i');
+   spark.className='firework-burst';
+   spark.style.left=x+'%';
+   spark.style.top=(100-travel)+'vh';
+   spark.style.setProperty('--color',color);
+   const angle=Math.PI*2*i/30+Math.random()*.12;
+   const distance=45+Math.random()*95;
+   spark.style.setProperty('--dx',Math.cos(angle)*distance+'px');
+   spark.style.setProperty('--dy',Math.sin(angle)*distance+'px');
+   fireworksLayer.appendChild(spark);
+   setTimeout(()=>spark.remove(),1000);
   }
+ },rise*1000);
+}
+function startFireworks(){
+ if(!fireworksLayer)return;
+ fireworksLayer.classList.add('active');
+ if(fireworksTimer)clearInterval(fireworksTimer);
+ launchFirework();
+ fireworksTimer=setInterval(launchFirework,380);
 }
 
-musicToggle.addEventListener('click', async e => {
-  e.stopPropagation();
-
-  if (musicOn) {
-    bgMusic.pause();
-    musicOn = false;
-    musicToggle.textContent = '♫ MUSIC OFF';
-    musicToggle.setAttribute('aria-label', 'Turn background music on');
-  } else {
-    await enableMusic();
-  }
-});
-
-bgMusic.addEventListener('play', () => {
-  musicOn = true;
-  musicToggle.textContent = '♫ MUSIC ON';
-  musicToggle.setAttribute('aria-label', 'Turn background music off');
-});
-
-bgMusic.addEventListener('pause', () => {
-  musicOn = false;
-  musicToggle.textContent = '♫ MUSIC OFF';
-  musicToggle.setAttribute('aria-label', 'Turn background music on');
-});
-
-window.addEventListener('load', () => enableMusic());
-document.addEventListener('pointerdown', () => {
-  if (!musicOn && !submissionSucceeded) enableMusic();
-});
-
-const fireworksLayer = document.getElementById('fireworks-layer');
-let fireworksTimer = null;
-
-function launchFirework() {
-  if (!fireworksLayer || !fireworksLayer.classList.contains('active')) return;
-
-  const rocket = document.createElement('i');
-  rocket.className = 'firework-launch';
-
-  const x = 8 + Math.random() * 84;
-  const travel = 28 + Math.random() * 42;
-  const rise = 0.65 + Math.random() * 0.7;
-
-  rocket.style.left = x + '%';
-  rocket.style.setProperty('--travel', travel + 'vh');
-  rocket.style.setProperty('--rise', rise + 's');
-  fireworksLayer.appendChild(rocket);
-
-  setTimeout(() => {
-    if (rocket.isConnected) rocket.remove();
-    if (!fireworksLayer.classList.contains('active')) return;
-
-    const colors = ['#ff3b18', '#ffb21c', '#fff1b8', '#ff6b35', '#f5f5f5'];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-
-    for (let i = 0; i < 30; i++) {
-      const spark = document.createElement('i');
-      spark.className = 'firework-burst';
-      spark.style.left = x + '%';
-      spark.style.top = (100 - travel) + 'vh';
-      spark.style.setProperty('--color', color);
-
-      const angle = Math.PI * 2 * i / 30 + Math.random() * .12;
-      const distance = 45 + Math.random() * 95;
-
-      spark.style.setProperty('--dx', Math.cos(angle) * distance + 'px');
-      spark.style.setProperty('--dy', Math.sin(angle) * distance + 'px');
-      fireworksLayer.appendChild(spark);
-      setTimeout(() => spark.remove(), 1000);
-    }
-  }, rise * 1000);
+const fx=document.getElementById('fx');
+function visualShot(headshot=false){
+  const flash=document.createElement('div');flash.className='flash';fx.appendChild(flash);setTimeout(()=>flash.remove(),250);
+  const count=headshot?32:15;
+  for(let i=0;i<count;i++){const s=document.createElement('i');s.className='spark';s.style.left=(headshot?50:Math.random()*100)+'%';s.style.top=(headshot?45:Math.random()*100)+'%';s.style.setProperty('--dx',(Math.random()*260-130)+'px');s.style.setProperty('--dy',(Math.random()*220-110)+'px');fx.appendChild(s);setTimeout(()=>s.remove(),650)}
+  const t=document.createElement('i');t.className='tracer';t.style.left=(Math.random()*65)+'%';t.style.top=(Math.random()*80+10)+'%';fx.appendChild(t);setTimeout(()=>t.remove(),400);
 }
-
-function startFireworks() {
-  if (!fireworksLayer) return;
-
-  fireworksLayer.classList.add('active');
-  if (fireworksTimer) clearInterval(fireworksTimer);
-  launchFirework();
-  fireworksTimer = setInterval(launchFirework, 380);
-}
-
-const fx = document.getElementById('fx');
-
-function visualShot(headshot = false) {
-  const flash = document.createElement('div');
-  flash.className = 'flash';
-  fx.appendChild(flash);
-  setTimeout(() => flash.remove(), 250);
-
-  const count = headshot ? 32 : 15;
-
-  for (let i = 0; i < count; i++) {
-    const s = document.createElement('i');
-    s.className = 'spark';
-    s.style.left = (headshot ? 50 : Math.random() * 100) + '%';
-    s.style.top = (headshot ? 45 : Math.random() * 100) + '%';
-    s.style.setProperty('--dx', (Math.random() * 260 - 130) + 'px');
-    s.style.setProperty('--dy', (Math.random() * 220 - 110) + 'px');
-    fx.appendChild(s);
-    setTimeout(() => s.remove(), 650);
-  }
-
-  const t = document.createElement('i');
-  t.className = 'tracer';
-  t.style.left = Math.random() * 65 + '%';
-  t.style.top = (Math.random() * 80 + 10) + '%';
-  fx.appendChild(t);
-  setTimeout(() => t.remove(), 400);
-}
-
+// Web Audio fallback ensures field sounds still work if first_sound.mp3 is missing.
 let audioCtx;
-
-function sound(type) {
-  try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-
-    const now = audioCtx.currentTime;
-    const master = audioCtx.createGain();
-    master.gain.setValueAtTime(type === 'headshot' ? .7 : .42, now);
-    master.gain.exponentialRampToValueAtTime(
-      .001,
-      now + (type === 'headshot' ? .48 : .22)
-    );
-    master.connect(audioCtx.destination);
-
-    const buffer = audioCtx.createBuffer(
-      1,
-      audioCtx.sampleRate * .18,
-      audioCtx.sampleRate
-    );
-    const data = buffer.getChannelData(0);
-
-    for (let i = 0; i < data.length; i++) {
-      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
-    }
-
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
-    noise.connect(master);
-    noise.start(now);
-  } catch (error) {
-    // Sound effects are optional; they must not interrupt registration.
+function sound(type){
+ try{
+  const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+  if(!AudioContextClass)return;
+  audioCtx=audioCtx||new AudioContextClass();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  const now=audioCtx.currentTime, master=audioCtx.createGain();
+  master.gain.setValueAtTime(type==='headshot'?.7:.42,now);
+  master.gain.exponentialRampToValueAtTime(.001,now+(type==='headshot'?.48:.22));
+  master.connect(audioCtx.destination);
+  const buffer=audioCtx.createBuffer(1,audioCtx.sampleRate*.18,audioCtx.sampleRate),data=buffer.getChannelData(0);
+  for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*Math.pow(1-i/data.length,3);
+  const noise=audioCtx.createBufferSource();noise.buffer=buffer;
+  const filter=audioCtx.createBiquadFilter();filter.type='lowpass';
+  filter.frequency.setValueAtTime(type==='headshot'?1300:1900,now);
+  filter.frequency.exponentialRampToValueAtTime(120,now+.18);
+  noise.connect(filter);filter.connect(master);noise.start(now);
+  const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sawtooth';
+  osc.frequency.setValueAtTime(type==='headshot'?180:125,now);osc.frequency.exponentialRampToValueAtTime(35,now+.16);
+  gain.gain.setValueAtTime(type==='headshot'?.7:.5,now);gain.gain.exponentialRampToValueAtTime(.001,now+.16);
+  osc.connect(gain);gain.connect(master);osc.start(now);osc.stop(now+.18);
+ }catch(e){}
+}
+const fieldTapSound=document.getElementById('field-tap-sound');
+let lastFieldSoundAt=0;
+function playFieldTapSound(){
+ const now=Date.now();
+ if(now-lastFieldSoundAt<140)return;
+ lastFieldSoundAt=now;
+ let fileStarted=false;
+ try{
+  if(fieldTapSound){
+   fieldTapSound.pause();
+   fieldTapSound.currentTime=0;
+   fieldTapSound.volume=1;
+   const playback=fieldTapSound.play();
+   if(playback&&typeof playback.then==='function'){
+    playback.then(()=>{fileStarted=true;}).catch(()=>{if(!fileStarted)sound('field');});
+   }else{
+    fileStarted=true;
+   }
+  }else{
+   sound('field');
   }
+ }catch(e){
+  sound('field');
+ }
+ visualShot(false);
 }
-
-const API_BASE = 'https://battle-royale-registration-system.onrender.com';
-const form = document.getElementById('reg-form');
-const modeSelect = document.getElementById('mode-select');
-const soloFields = document.getElementById('solo-fields');
-const squadFields = document.getElementById('squad-fields');
-const submitButton = form.querySelector('.submit');
-const messageBox = document.getElementById('message');
-const confirmationPage = document.getElementById('confirmation-page');
-const assignedTeamLabel = document.getElementById('assigned-team-label');
-const confirmationMessage = document.querySelector('.confirmation-message');
-const confirmationSub = document.querySelector('.confirmation-sub');
-const backButton = document.getElementById('back-to-form');
-const successSound = document.getElementById('success-loop-sound');
-
-function setMessage(text, isError = false) {
-  messageBox.textContent = text;
-  messageBox.style.display = text ? 'block' : 'none';
-  messageBox.style.borderColor = isError ? '#ff3b18' : '#ffb21c77';
-  messageBox.style.color = isError ? '#ff9b8a' : '#ffd18b';
+// pointerdown responds more reliably than click on mobile; ignore disabled controls.
+document.addEventListener('pointerdown',e=>{
+ const target=e.target;
+ if(!target || registrationLocked)return;
+ if(target.closest('#reg-form') && target.closest('input,select,textarea,label,.upload') && !target.closest('.submit'))playFieldTapSound();
+},true);
+document.addEventListener('click',e=>{
+ const target=e.target;
+ if(!target || registrationLocked)return;
+ if(target.closest('#reg-form') && target.closest('input,select,textarea,label,.upload') && !target.closest('.submit'))playFieldTapSound();
+},true);
+function lockRegistrationForm(){
+ registrationLocked=true;
+ const form=document.getElementById('reg-form');
+ if(form)form.querySelectorAll('input,select,textarea,button').forEach(control=>{control.disabled=true;});
+ if(musicToggle){musicToggle.disabled=true;musicToggle.textContent='♫ MUSIC OFF';}
 }
-
-function updateModeFields() {
-  const isSolo = modeSelect.value === 'solo';
-  soloFields.style.display = isSolo ? 'block' : 'none';
-  squadFields.style.display = isSolo ? 'none' : 'block';
-
-  soloFields.querySelectorAll('input').forEach(input => {
-    input.disabled = !isSolo;
-    input.required = isSolo;
-  });
-
-  squadFields.querySelectorAll('input').forEach(input => {
-    input.disabled = isSolo;
-    input.required = !isSolo;
-  });
-
-  setMessage('');
+const modeSelect=document.getElementById('mode-select');
+const soloFields=document.getElementById('solo-fields');
+const squadFields=document.getElementById('squad-fields');
+const soloInputs=[...soloFields.querySelectorAll('input')];
+const squadInputs=[...squadFields.querySelectorAll('input')];
+function updateMode(){
+ const squad=modeSelect.value==='squad';
+ soloFields.style.display=squad?'none':'block';
+ squadFields.style.display=squad?'block':'none';
+ soloInputs.forEach(input=>{input.required=!squad;input.disabled=squad});
+ squadInputs.forEach(input=>{input.required=squad;input.disabled=!squad});
 }
+modeSelect.addEventListener('change',updateMode);
+updateMode();
 
-modeSelect.addEventListener('change', updateModeFields);
-updateModeFields();
-
-async function loadStats() {
-  const stats = document.getElementById('registration-stats');
-
-  try {
-    const response = await fetch(API_BASE + '/api/stats', {
-      method: 'GET',
-      cache: 'no-store'
-    });
-
-    if (!response.ok) throw new Error('Stats unavailable');
-
-    const data = await response.json();
-    stats.textContent =
-      'ENTRIES: ' + Number(data.total || 0) +
-      '  ·  SOLO: ' + Number(data.solo || 0) +
-      '  ·  SQUAD: ' + Number(data.squad || 0);
-  } catch (error) {
-    stats.textContent = 'TOURNAMENT REGISTRATION';
-  }
+const API_BASE='https://battle-royale-registration-system.onrender.com';
+const formMessage=document.getElementById('message');
+function showFormMessage(text,isError=false){
+ formMessage.textContent=text;
+ formMessage.style.display='block';
+ formMessage.style.borderColor=isError?'#ff5a5a':'#ffb21c77';
+ formMessage.style.color=isError?'#ffb0b0':'#ffd18b';
 }
+async function refreshRegistrationStats(){
+ try{
+  const response=await fetch(`${API_BASE}/api/stats`,{cache:'no-store'});
+  if(!response.ok)return;
+  const stats=await response.json();
+  const el=document.getElementById('registration-stats');
+  if(el)el.textContent=`${stats.total} ENTRIES LOGGED · ${stats.solo} SOLO · ${stats.squad} SQUAD`;
+ }catch(err){ /* Stats are optional; the form can still be used. */ }
+}
+refreshRegistrationStats();
+document.getElementById('reg-form').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const form=e.currentTarget;
+ if(!form.reportValidity())return;
+ const submitButton=form.querySelector('.submit');
+ const originalLabel=submitButton.textContent;
+ submitButton.disabled=true;
+ submitButton.textContent='SENDING ENTRY...';
+ formMessage.style.display='none';
+ try{
+  const payload=new FormData(form);
+  const response=await fetch(`${API_BASE}/api/registrations`,{method:'POST',body:payload,cache:'no-store'});
+  const result=await response.json().catch(()=>({error:'Unexpected response from the server.'}));
+  if(!response.ok || !result.ok)throw new Error(result.error||'Registration could not be saved. Please try again.');
+  submissionSucceeded=true;
+  lockRegistrationForm();
+  if(bgMusic){bgMusic.pause();bgMusic.currentTime=0;}
+  visualShot(true);startFireworks();
+  const successLoop=document.getElementById('success-loop-sound');
+  if(successLoop){try{successLoop.pause();successLoop.currentTime=0;successLoop.loop=false;successLoop.volume=.42;await successLoop.play();}catch(err){}}
+  const confirmation=document.getElementById('confirmation-page');
+  confirmation.querySelector('.confirmation-message').textContent=`REGISTRATION CONFIRMED · ${result.registrationCode || 'SUCCESS'}`;
+  const assignedNumber=result.teamLabel || (result.teamNumber != null
+    ? String(result.mode || form.mode.value).toUpperCase()+' '+result.teamNumber
+    : String(result.mode || form.mode.value).toUpperCase()+' NUMBER PENDING');
+  document.getElementById('assigned-team-label').textContent=assignedNumber;
+  confirmation.querySelector('.confirmation-sub').textContent='Save your registration code: '+(result.registrationCode || 'Not provided by server')+'. Keep it for tournament verification.';
+  confirmation.classList.add('active');
+  document.getElementById('back-to-form').addEventListener('click',()=>{
+   confirmation.classList.remove('active');
 
-loadStats();
+   // Stop music and all celebration effects.
+   if(bgMusic){bgMusic.pause();bgMusic.currentTime=0;}
+   if(successLoop){successLoop.pause();successLoop.currentTime=0;}
+   if(fieldTapSound){fieldTapSound.pause();fieldTapSound.currentTime=0;}
+   if(fireworksTimer){clearInterval(fireworksTimer);fireworksTimer=null;}
+   fireworksLayer.classList.remove('active');
+   fireworksLayer.replaceChildren();
+   if(fx)fx.replaceChildren();
 
-form.addEventListener('submit', async event => {
-  event.preventDefault();
-
-  if (!form.reportValidity()) return;
-
-  const currentMode = modeSelect.value;
-  const originalButtonText = submitButton.textContent;
-  submitButton.disabled = true;
-  submitButton.textContent = 'SUBMITTING ENTRY...';
-  setMessage('Submitting your registration securely...');
-
-  try {
-    const formData = new FormData(form);
-
-    const response = await fetch(API_BASE + '/api/registrations', {
-      method: 'POST',
-      body: formData,
-      cache: 'no-store'
-    });
-
-    let result;
-    try {
-      result = await response.json();
-    } catch {
-      throw new Error('The server returned an unexpected response. Please try again.');
-    }
-
-    if (!response.ok || !result.ok) {
-      throw new Error(
-        result.error ||
-        result.message ||
-        'Registration failed. Please check your details and try again.'
-      );
-    }
-
-    submissionSucceeded = true;
-
-    // Stop background music during the confirmation celebration.
-    bgMusic.pause();
-    musicOn = false;
-    musicToggle.textContent = '♫ MUSIC OFF';
-    musicToggle.setAttribute('aria-label', 'Background music is off');
-
-    const assignedNumber = result.teamLabel ||
-      (result.teamNumber != null
-        ? String(result.mode || currentMode).toUpperCase() + ' ' + result.teamNumber
-        : String(currentMode).toUpperCase() + ' NUMBER PENDING');
-
-    confirmationMessage.textContent =
-      'REGISTRATION CONFIRMED · ' + (result.registrationCode || 'SUCCESS');
-
-    assignedTeamLabel.textContent = assignedNumber;
-
-    confirmationSub.textContent =
-      'Your registration has been saved successfully. Keep your registration code: ' +
-      (result.registrationCode || 'Not provided by server');
-
-    confirmationPage.classList.add('active');
-    startFireworks();
-    visualShot(true);
-    sound('headshot');
-
-    try {
-      successSound.currentTime = 0;
-      successSound.volume = 0.65;
-      await successSound.play();
-    } catch (error) {
-      // Browsers may block audio playback; registration is already successful.
-    }
-
-    await loadStats();
-
-  } catch (error) {
-    setMessage(
-      error.message ||
-      'Could not connect to the registration server. Please try again.',
-      true
-    );
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = originalButtonText;
-  }
+   // Submitted details remain locked and unchanged when returning to the form.
+   lockRegistrationForm();
+   document.getElementById('register').scrollIntoView({behavior:'smooth',block:'start'});
+   refreshRegistrationStats();
+  },{once:true});
+  requestAnimationFrame(()=>setTimeout(()=>{
+   if(document.getElementById('confirmation-page').classList.contains('active'))startFireworks();
+  },180));
+  refreshRegistrationStats();
+ }catch(err){
+  showFormMessage(err.message||'Unable to submit registration. Please check your connection and try again.',true);
+ }finally{
+  if(!registrationLocked){submitButton.disabled=false;submitButton.textContent=originalLabel;}
+ }
 });
-
-backButton.addEventListener('click', () => {
-  confirmationPage.classList.remove('active');
-  fireworksLayer.classList.remove('active');
-
-  if (fireworksTimer) {
-    clearInterval(fireworksTimer);
-    fireworksTimer = null;
-  }
-
-  fireworksLayer.replaceChildren();
-  successSound.pause();
-  successSound.currentTime = 0;
-
-  // Keep the entered form values so the user can review them.
-  submissionSucceeded = false;
-  setMessage('');
-  document.getElementById('register').scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-});
-
-// Try to play the background video where supported.
-const bgVideo = document.getElementById('bg-video');
-if (bgVideo) {
-  bgVideo.play().catch(() => {
-    // The poster/background color remains as a fallback.
-  });
-}
 </script>
-
-</body>
-</html>
+</body></html>
