@@ -56,7 +56,12 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
 .confirmation-icon{width:68px;height:68px;margin:0 auto 22px;border:2px solid #ff542e;border-radius:50%;display:grid;place-items:center;color:#ffb21c;font-size:38px;box-shadow:0 0 25px #ff3b1844}
 .confirmation-card h2{font-family:Orbitron,sans-serif;font-size:clamp(38px,9vw,64px);margin:15px 0;color:white}.confirmation-card h2 span{color:#ff3b18}
 .confirmation-message{font-family:Orbitron,sans-serif;letter-spacing:1.5px;color:#ffb21c;font-size:13px}
-.confirmation-sub{font-size:18px;color:#bbb;margin:16px 0 20px;line-height:1.5}\n#assigned-team-label{font-family:Orbitron,sans-serif;font-size:clamp(25px,6vw,40px);font-weight:900;letter-spacing:2px;color:#ffb21c;margin:18px 0 8px;overflow-wrap:anywhere}\n#team-number-note{font-size:15px;line-height:1.5;color:#ffd18b;border:1px solid #ffb21c66;background:#ffb21c0d;padding:14px;margin:0 0 24px}
+.confirmation-sub{font-size:18px;color:#bbb;margin:16px 0 20px;line-height:1.5}
+.team-number-box{margin:20px 0 16px;padding:20px 14px;border:2px solid #ffb21c;background:linear-gradient(135deg,#33200a,#111318);box-shadow:0 0 24px #ffb21c35,inset 0 0 18px #ffb21c0d;position:relative}
+.team-number-heading{font-family:Orbitron,sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;color:#ffb21c;margin:0 0 10px}
+#assigned-team-label{font-family:Orbitron,sans-serif;font-size:clamp(25px,6vw,40px);font-weight:900;letter-spacing:2px;color:#fff;margin:0;overflow-wrap:anywhere;text-shadow:0 0 16px #ff6a19aa}
+#team-number-note{font-size:14px;line-height:1.55;color:#ffd18b;border:1px solid #ff542e88;background:#ff3b1814;padding:14px;margin:0 0 22px}
+#team-number-note strong{color:#ff6a4b;letter-spacing:1px}
 @keyframes confirm-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 
 </style>
@@ -78,8 +83,12 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
     <div class="kicker">// ENTRY STATUS</div>
     <h2>YOU'RE <span>IN!</span></h2>
     <p class="confirmation-message">REGISTRATION DETAILS VALIDATED</p>
-    <div id="assigned-team-label" aria-live="polite">TEAM NUMBER PENDING</div>
-    <p class="confirmation-sub">Get ready for the battlefield. Let the celebration begin!</p>
+    <div class="team-number-box">
+      <p class="team-number-heading">YOUR ASSIGNED TEAM NUMBER</p>
+      <div id="assigned-team-label" aria-live="polite">TEAM NUMBER PENDING</div>
+    </div>
+    <div id="team-number-note"><strong>⚠ NOTE YOUR TEAM NUMBER!</strong><br>Take a screenshot or write it down now. Keep it safe—you may need it for tournament updates and team identification. Do not lose it.</div>
+    <p class="confirmation-sub">Registration successful! Get ready for the battlefield.</p>
     <button type="button" id="back-to-form" class="cta">BACK TO REGISTRATION ↗</button>
   </div>
 </div>
