@@ -149,6 +149,21 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
+/* Different colors make Solo and Squad numbers easy to identify. */
+.number-tag.solo-number {
+  border: 2px solid #36c8ff;
+  background: #092633;
+  color: #8ee4ff;
+  box-shadow: 0 0 12px #36c8ff22;
+}
+
+.number-tag.squad-number {
+  border: 2px solid #b98aff;
+  background: #211333;
+  color: #dec3ff;
+  box-shadow: 0 0 12px #b98aff22;
+}
+
 .delete-btn {
   background: #ff6538;
   color: #111;
@@ -426,6 +441,11 @@ async function loadRegistrations() {
 
       const numberTag = document.createElement('div');
       numberTag.className = 'number-tag';
+      if (mode === 'solo') {
+        numberTag.classList.add('solo-number');
+      } else if (mode === 'squad') {
+        numberTag.classList.add('squad-number');
+      }
       numberTag.textContent = assignedNumber
         ? 'ASSIGNED NUMBER: ' + assignedNumber
         : 'ASSIGNED NUMBER: Not available for this registration';
