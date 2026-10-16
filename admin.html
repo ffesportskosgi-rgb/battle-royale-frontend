@@ -6,219 +6,544 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>BATTLE ROYALE Admin</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;padding:16px;background:#090b12;color:#f5f5f5;font-family:Arial,sans-serif}
-main{max-width:1000px;margin:20px auto}
-.panel,.card{background:#151923;border:1px solid #343949;border-radius:14px;padding:18px;margin-bottom:16px}
-h1{color:#ff6538;margin-top:0}
-input,button{width:100%;padding:13px;margin-top:12px;border-radius:8px;font-size:16px}
-input{background:#0c1018;color:white;border:1px solid #444}
-button{background:#ff6538;color:#111;border:0;font-weight:bold;cursor:pointer}
-.secondary{background:#293142;color:white}
-.hidden{display:none}
-.muted{color:#adb7c7}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:18px 0}
-.stat{background:#0b0e15;padding:14px;border-radius:10px;overflow-wrap:anywhere}
-.stat strong{display:block;color:#ff6538;font-size:24px;margin-top:6px}
-#registrations{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
-.card{margin:0;background:#0d111a;overflow-wrap:anywhere}
-.card h3{margin-top:0}
-.detail{padding:9px 0;border-bottom:1px solid #293142}
-.detail small{display:block;color:#adb7c7;margin-bottom:4px}
-.proof{display:block;width:100%;max-height:250px;object-fit:contain;margin-top:12px;background:#080a0f;border-radius:8px}
-.tag{display:inline-block;padding:5px 9px;border-radius:20px;background:#382116;color:#ffb49c;font-size:12px}
-#message{white-space:pre-wrap;margin-top:12px}
-@media(max-width:400px){body{padding:9px}.panel,.card{padding:13px}}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: #090b12;
+  color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+main {
+  max-width: 1000px;
+  margin: 20px auto;
+}
+
+.panel, .card {
+  background: #151923;
+  border: 1px solid #343949;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  color: #ff6538;
+  margin-top: 0;
+}
+
+input, button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+input {
+  background: #0c1018;
+  color: white;
+  border: 1px solid #444;
+}
+
+button {
+  background: #ff6538;
+  color: #111;
+  border: 0;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secondary {
+  background: #293142;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+.muted {
+  color: #adb7c7;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 18px 0;
+}
+
+.stat {
+  background: #0b0e15;
+  padding: 14px;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.stat strong {
+  display: block;
+  color: #ff6538;
+  font-size: 24px;
+  margin-top: 6px;
+}
+
+#registrations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 12px;
+}
+
+.card {
+  margin: 0;
+  background: #0d111a;
+  overflow-wrap: anywhere;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.detail {
+  padding: 9px 0;
+  border-bottom: 1px solid #293142;
+}
+
+.detail small {
+  display: block;
+  color: #adb7c7;
+  margin-bottom: 4px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #382116;
+  color: #ffb49c;
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.delete-btn {
+  background: #ff6538;
+  color: #111;
+}
+
+#message {
+  white-space: pre-wrap;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+#registrations:empty {
+  margin: 0;
+}
+
+@media (max-width: 400px) {
+  body {
+    padding: 9px;
+  }
+
+  .panel, .card {
+    padding: 13px;
+  }
+
+  .stats {
+    gap: 6px;
+  }
+
+  .stat {
+    padding: 10px;
+  }
+}
 </style>
 </head>
+
 <body>
 <main>
+
 <section class="panel">
-<h1>⚔ BATTLE ROYALE</h1>
-<p class="muted">Tournament Administration Portal</p>
-<form id="loginForm">
-<label for="username">Admin username</label>
-<input id="username" autocomplete="username" required>
-<label for="password">Admin password</label>
-<input id="password" type="password" autocomplete="current-password" required>
-<button id="loginButton" type="submit">SECURE LOGIN</button>
-</form>
-<div id="message" role="status" aria-live="polite"></div>
+  <h1>⚔ BATTLE ROYALE</h1>
+  <p class="muted">Tournament Administration Portal</p>
+
+  <form id="loginForm">
+    <label for="username">Admin username</label>
+    <input
+      id="username"
+      autocomplete="username"
+      required
+    >
+
+    <label for="password">Admin password</label>
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      required
+    >
+
+    <button id="loginButton" type="submit">
+      SECURE LOGIN
+    </button>
+  </form>
+
+  <div id="message" role="status" aria-live="polite"></div>
 </section>
 
 <section id="dashboard" class="panel hidden">
-<h2>Player Registrations</h2>
-<p class="muted">Review registrations and payment proofs.</p>
-<button id="refresh" type="button">↻ Refresh registrations</button>
-<div class="stats">
-<div class="stat">Total<strong id="total">0</strong></div>
-<div class="stat">Solo<strong id="solo">0</strong></div>
-<div class="stat">Squad<strong id="squad">0</strong></div>
-</div>
-<div id="registrations"></div>
-<button class="secondary" id="logout" type="button">Log out</button>
+  <h2>Player Registrations</h2>
+  <p class="muted">Review registered player and team details.</p>
+
+  <button id="refresh" type="button">
+    ↻ Refresh registrations
+  </button>
+
+  <div class="stats">
+    <div class="stat">
+      Total
+      <strong id="total">0</strong>
+    </div>
+
+    <div class="stat">
+      Solo
+      <strong id="solo">0</strong>
+    </div>
+
+    <div class="stat">
+      Squad
+      <strong id="squad">0</strong>
+    </div>
+  </div>
+
+  <div id="registrations"></div>
+
+  <button class="secondary" id="logout" type="button">
+    Log out
+  </button>
 </section>
+
 </main>
 
 <script>
-const API='https://battle-royale-registration-system.onrender.com';
-let token='';
-const $=id=>document.getElementById(id);
+'use strict';
 
-$('loginForm').addEventListener('submit',async e=>{
-e.preventDefault();
-$('loginButton').disabled=true;
-$('message').textContent='Signing in...';
-try{
-const res=await fetch(API+'/api/admin/login',{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({
-username:$('username').value.trim(),
-password:$('password').value
-})
-});
-const data=await res.json();
-if(!res.ok)throw Error(data.message||data.error||'Login failed');
-token=data.token||data.accessToken||'';
-if(!token)throw Error('No login token received. Backend response needs checking.');
-$('loginForm').classList.add('hidden');
-$('dashboard').classList.remove('hidden');
-$('message').textContent='Login successful.';
-await load();
-}catch(err){
-$('message').textContent=err.message||'Could not connect to backend.';
-}finally{$('loginButton').disabled=false;}
-});
+const API = 'https://battle-royale-registration-system.onrender.com';
 
-function addField(parent,label,value){
-const d=document.createElement('div');
-d.className='detail';
-const s=document.createElement('small');
-s.textContent=label;
-const v=document.createElement('div');
-v.textContent=value==null||value===''?'—':String(value);
-d.append(s,v);
-parent.appendChild(d);
+let token = '';
+
+const $ = id => document.getElementById(id);
+
+function showMessage(message) {
+  $('message').textContent = message;
 }
 
-async function load(){
-$('refresh').disabled=true;
-const box=$('registrations');
-box.replaceChildren();
-try{
-const res=await fetch(API+'/api/admin/registrations',{
-headers:{Authorization:'Bearer '+token}
-});
-const data=await res.json();
-if(res.status===401||res.status===403){
-token='';
-$('dashboard').classList.add('hidden');
-$('loginForm').classList.remove('hidden');
-throw Error('Session expired. Please log in again.');
-}
-if(!res.ok)throw Error(data.message||data.error||'Could not load registrations.');
-const rows=Array.isArray(data)?data:(data.registrations||data.data||[]);
-$('total').textContent=rows.length;
-$('solo').textContent=rows.filter(r=>String(r.mode||'').toLowerCase()==='solo').length;
-$('squad').textContent=rows.filter(r=>String(r.mode||'').toLowerCase()==='squad').length;
-if(!rows.length){
-box.textContent='No registrations found.';
-return;
-}
-rows.forEach((r,i)=>{
-const card=document.createElement('article');
-card.className='card';
-const title=document.createElement('h3');
-title.textContent=r.registrationCode||('Registration '+(i+1));
-card.appendChild(title);
-const mode=document.createElement('span');
-mode.className='tag';
-mode.textContent=r.mode||'Registration';
-card.appendChild(mode);
+function addField(parent, label, value) {
+  const detail = document.createElement('div');
+  detail.className = 'detail';
 
+  const title = document.createElement('small');
+  title.textContent = label;
 
-const details = r.players && typeof r.players === 'object' ? r.players : r;
+  const content = document.createElement('div');
+  content.textContent =
+    value === undefined || value === null || value === ''
+      ? '—'
+      : String(value);
 
-if (String(r.mode || '').toLowerCase() === 'solo') {
-  addField(card, 'Player name', details.playerName || details.name);
-  addField(card, 'Mobile number', details.playerMobile || details.mobile);
-} else if (String(r.mode || '').toLowerCase() === 'squad') {
-  addField(card, 'Team name', details.teamName);
-  addField(card, 'Team head name', details.teamHead);
-  addField(card, 'Team head mobile number', details.teamHeadMobile);
+  detail.append(title, content);
+  parent.appendChild(detail);
 }
 
-addField(
-  card,
-  'Registered on',
-  r.createdAt ? new Date(r.createdAt).toLocaleString() : 'Not available'
-);
-}
-
-
-const del = document.createElement('button');
-del.type = 'button';
-del.textContent = 'Delete registration';
-del.className = 'delete-btn';
-
-del.addEventListener('click', async () => {
-  const code = r.registrationCode;
-
-  if (!code) {
-    alert('Registration code is missing.');
-    return;
+function getRows(data) {
+  if (Array.isArray(data)) {
+    return data;
   }
 
-  if (!confirm('Delete registration ' + code + '? This cannot be undone.')) {
-    return;
+  if (Array.isArray(data.registrations)) {
+    return data.registrations;
   }
 
-  del.disabled = true;
-  del.textContent = 'Deleting...';
+  if (Array.isArray(data.data)) {
+    return data.data;
+  }
+
+  return [];
+}
+
+$('loginForm').addEventListener('submit', async event => {
+  event.preventDefault();
+
+  const loginButton = $('loginButton');
+  loginButton.disabled = true;
+  showMessage('Signing in...');
 
   try {
-    const response = await fetch(
-      API + '/api/admin/registrations/' + encodeURIComponent(code),
-      {
-        method: 'DELETE',
-        headers: { Authorization: 'Bearer ' + token }
-      }
-    );
+    const response = await fetch(API + '/api/admin/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: $('username').value.trim(),
+        password: $('password').value
+      })
+    });
 
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error || 'Delete failed.');
+      throw new Error(
+        data.error || data.message || 'Login failed.'
+      );
     }
 
-    alert('Registration deleted successfully.');
-    await load();
-  } catch (err) {
-    alert(err.message || 'Could not delete registration.');
-    del.disabled = false;
-    del.textContent = 'Delete registration';
+    token = data.token || data.accessToken || '';
+
+    if (!token) {
+      throw new Error('No login token received from the server.');
+    }
+
+    $('loginForm').classList.add('hidden');
+    $('dashboard').classList.remove('hidden');
+
+    showMessage('Login successful.');
+
+    await loadRegistrations();
+
+  } catch (error) {
+    showMessage(error.message || 'Could not connect to the backend.');
+  } finally {
+    loginButton.disabled = false;
   }
 });
 
-card.appendChild(del);
-box.appendChild(card);
-});
-}catch(err){
-box.textContent=err.message||'Failed to load registrations.';
-}finally{$('refresh').disabled=false;}
+async function loadRegistrations() {
+  const refreshButton = $('refresh');
+  const box = $('registrations');
+
+  refreshButton.disabled = true;
+  box.replaceChildren();
+  box.textContent = 'Loading registrations...';
+
+  try {
+    const response = await fetch(API + '/api/admin/registrations', {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    });
+
+    const data = await response.json();
+
+    if (response.status === 401 || response.status === 403) {
+      token = '';
+
+      $('dashboard').classList.add('hidden');
+      $('loginForm').classList.remove('hidden');
+
+      throw new Error('Your session expired. Please log in again.');
+    }
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || data.message || 'Could not load registrations.'
+      );
+    }
+
+    const rows = getRows(data);
+
+    $('total').textContent = rows.length;
+
+    $('solo').textContent = rows.filter(
+      row => String(row.mode || '').toLowerCase() === 'solo'
+    ).length;
+
+    $('squad').textContent = rows.filter(
+      row => String(row.mode || '').toLowerCase() === 'squad'
+    ).length;
+
+    box.replaceChildren();
+
+    if (rows.length === 0) {
+      box.textContent = 'No registrations found.';
+      return;
+    }
+
+    rows.forEach((registration, index) => {
+      const card = document.createElement('article');
+      card.className = 'card';
+
+      const heading = document.createElement('h3');
+      heading.textContent =
+        registration.registrationCode ||
+        ('Registration ' + (index + 1));
+
+      card.appendChild(heading);
+
+      const modeTag = document.createElement('span');
+      modeTag.className = 'tag';
+      modeTag.textContent = registration.mode || 'Registration';
+
+      card.appendChild(modeTag);
+
+      /*
+       * The current backend returns:
+       * players: { playerName, playerMobile, confirmed }
+       * or
+       * players: { teamName, teamHead, teamHeadMobile, confirmed }
+       *
+       * Older records may have a different data structure.
+       */
+      const details =
+        registration.players &&
+        typeof registration.players === 'object' &&
+        !Array.isArray(registration.players)
+          ? registration.players
+          : registration;
+
+      const mode = String(registration.mode || '').toLowerCase();
+
+      if (mode === 'solo') {
+        addField(
+          card,
+          'Player name',
+          details.playerName || details.name ||
+          registration.playerName || registration.name
+        );
+
+        addField(
+          card,
+          'Mobile number',
+          details.playerMobile || details.mobile ||
+          registration.playerMobile || registration.mobile
+        );
+
+      } else if (mode === 'squad') {
+        addField(
+          card,
+          'Team name',
+          details.teamName || registration.teamName
+        );
+
+        addField(
+          card,
+          'Team head name',
+          details.teamHead || registration.teamHead
+        );
+
+        addField(
+          card,
+          'Team head mobile number',
+          details.teamHeadMobile || registration.teamHeadMobile
+        );
+
+      } else {
+        addField(card, 'Registration mode', registration.mode);
+      }
+
+      addField(
+        card,
+        'Registered on',
+        registration.createdAt
+          ? new Date(registration.createdAt).toLocaleString()
+          : 'Not available'
+      );
+
+      const deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.textContent = 'Delete registration';
+      deleteButton.className = 'delete-btn';
+
+      deleteButton.addEventListener('click', async () => {
+        const code = registration.registrationCode;
+
+        if (!code) {
+          alert('Registration code is missing.');
+          return;
+        }
+
+        if (!confirm(
+          'Delete registration ' + code + '? This cannot be undone.'
+        )) {
+          return;
+        }
+
+        deleteButton.disabled = true;
+        deleteButton.textContent = 'Deleting...';
+
+        try {
+          const deleteResponse = await fetch(
+            API + '/api/admin/registrations/' +
+            encodeURIComponent(code),
+            {
+              method: 'DELETE',
+              headers: {
+                Authorization: 'Bearer ' + token
+              }
+            }
+          );
+
+          const deleteData = await deleteResponse.json();
+
+          if (!deleteResponse.ok) {
+            throw new Error(
+              deleteData.error || 'Delete failed.'
+            );
+          }
+
+          alert('Registration deleted successfully.');
+          await loadRegistrations();
+
+        } catch (error) {
+          alert(error.message || 'Could not delete registration.');
+
+          deleteButton.disabled = false;
+          deleteButton.textContent = 'Delete registration';
+        }
+      });
+
+      card.appendChild(deleteButton);
+      box.appendChild(card);
+    });
+
+  } catch (error) {
+    box.textContent =
+      error.message || 'Failed to load registrations.';
+
+  } finally {
+    refreshButton.disabled = false;
+  }
 }
 
-$('refresh').addEventListener('click',load);
-$('logout').addEventListener('click',()=>{
-token='';
-$('dashboard').classList.add('hidden');
-$('loginForm').classList.remove('hidden');
-$('password').value='';
-$('registrations').replaceChildren();
-$('message').textContent='Logged out.';
+$('refresh').addEventListener('click', loadRegistrations);
+
+$('logout').addEventListener('click', () => {
+  token = '';
+
+  $('dashboard').classList.add('hidden');
+  $('loginForm').classList.remove('hidden');
+
+  $('password').value = '';
+  $('registrations').replaceChildren();
+
+  $('total').textContent = '0';
+  $('solo').textContent = '0';
+  $('squad').textContent = '0';
+
+  showMessage('Logged out.');
 });
 </script>
+
 </body>
 </html>
