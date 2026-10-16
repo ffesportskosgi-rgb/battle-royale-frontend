@@ -138,35 +138,25 @@ mode.className='tag';
 mode.textContent=r.mode||'Registration';
 card.appendChild(mode);
 
-addField(card,'Player name',r.playerName||r.name);
-addField(card,'Free Fire ID',r.ffId||r.ffID||r.ff_id||r.playerId);
-addField(card,'Registered on',r.createdAt?new Date(r.createdAt).toLocaleString():'Not available');
 
-if(Array.isArray(r.players)){
-r.players.forEach((p,j)=>{
-addField(card,'Player '+(j+1),[p.name,p.ffId||p.ffID||p.ff_id||p.uid].filter(Boolean).join(' — '));
-});
+const details = r.players && typeof r.players === 'object' ? r.players : r;
+
+if (String(r.mode || '').toLowerCase() === 'solo') {
+  addField(card, 'Player name', details.playerName || details.name);
+  addField(card, 'Mobile number', details.playerMobile || details.mobile);
+} else if (String(r.mode || '').toLowerCase() === 'squad') {
+  addField(card, 'Team name', details.teamName);
+  addField(card, 'Team head name', details.teamHead);
+  addField(card, 'Team head mobile number', details.teamHeadMobile);
 }
-if(r.proofUrl){
-const label=document.createElement('p');
-label.className='muted';
-label.textContent='Payment proof';
-card.appendChild(label);
-const img=document.createElement('img');
-img.className='proof';
-img.alt='Payment proof image';
-img.loading='lazy';
-img.src=r.proofUrl;
-img.onerror=()=>{img.alt='Preview unavailable. Use View payment proof below.';img.style.display='none';};
-card.appendChild(img);
-const open=document.createElement('button');
-open.type='button';
-open.textContent='View payment proof';
-open.addEventListener('click',()=>window.open(r.proofUrl,'_blank','noopener,noreferrer'));
-card.appendChild(open);
-}else{
-addField(card,'Payment proof','No proof link returned');
+
+addField(
+  card,
+  'Registered on',
+  r.createdAt ? new Date(r.createdAt).toLocaleString() : 'Not available'
+);
 }
+
 
 const del = document.createElement('button');
 del.type = 'button';
