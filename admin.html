@@ -136,6 +136,19 @@ button:disabled {
   text-transform: lowercase;
 }
 
+.number-tag {
+  display: block;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #ff6538;
+  border-radius: 10px;
+  background: #24140f;
+  color: #ffd0bf;
+  font-size: 18px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
 .delete-btn {
   background: #ff6538;
   color: #111;
@@ -397,13 +410,32 @@ async function loadRegistrations() {
 
       card.appendChild(modeTag);
 
+      // Display the permanent number assigned by the backend.
+      const mode = String(registration.mode || '').toLowerCase();
+
+      const assignedNumber =
+        registration.teamLabel ||
+        (
+          registration.teamNumber !== undefined &&
+          registration.teamNumber !== null &&
+          registration.teamNumber !== ''
+            ? (mode ? mode.toUpperCase() : 'TEAM') +
+              ' ' + registration.teamNumber
+            : ''
+        );
+
+      const numberTag = document.createElement('div');
+      numberTag.className = 'number-tag';
+      numberTag.textContent = assignedNumber
+        ? 'ASSIGNED NUMBER: ' + assignedNumber
+        : 'ASSIGNED NUMBER: Not available for this registration';
+
+      card.appendChild(numberTag);
+
       /*
-       * The current backend returns:
-       * players: { playerName, playerMobile, confirmed }
-       * or
-       * players: { teamName, teamHead, teamHeadMobile, confirmed }
-       *
-       * Older records may have a different data structure.
+       * Current backend structure:
+       * Solo: players contains playerName and playerMobile.
+       * Squad: players contains teamName, teamHead and teamHeadMobile.
        */
       const details =
         registration.players &&
@@ -411,8 +443,6 @@ async function loadRegistrations() {
         !Array.isArray(registration.players)
           ? registration.players
           : registration;
-
-      const mode = String(registration.mode || '').toLowerCase();
 
       if (mode === 'solo') {
         addField(
