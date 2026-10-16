@@ -64,6 +64,90 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
 #team-number-note strong{color:#ff6a4b;letter-spacing:1px}
 @keyframes confirm-in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
 
+
+.instagram-follow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  max-width: 330px;
+  margin: 12px auto 10px;
+  padding: 9px 12px;
+  border: 1px solid #e1306c;
+  border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(110deg, #833ab4 0%, #e1306c 52%, #f77737 100%);
+  box-shadow: 0 0 16px #e1306c30;
+  font-family: inherit;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-align: center;
+  transition: transform .18s ease, filter .18s ease;
+}
+.instagram-follow:hover, .instagram-follow:focus-visible {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.instagram-follow svg {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+}
+.instagram-follow small {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .5px;
+  opacity: .92;
+}
+
+
+/* Instagram follow : submit button ratio = 1 : 3 */
+.registration-action-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  margin-top: 12px;
+}
+.registration-action-row .instagram-follow {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  padding: 9px 8px;
+  gap: 6px;
+  flex-direction: column;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: .3px;
+}
+.registration-action-row .instagram-follow svg {
+  width: 20px;
+  height: 20px;
+  flex-basis: 20px;
+}
+.registration-action-row .instagram-follow small {
+  font-size: 9px;
+  line-height: 1.2;
+}
+.registration-action-row .submit {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+@media (max-width: 360px) {
+  .registration-action-row { gap: 6px; }
+  .registration-action-row .instagram-follow { padding: 8px 5px; }
+  .registration-action-row .instagram-follow small { font-size: 8px; }
+}
+
 </style>
 </head>
 <body>
@@ -122,7 +206,17 @@ footer{text-align:center;padding:18px;border-top:1px solid #ffffff14;color:#666;
       <div class="field"><label for="team-head-mobile">TEAM HEAD MOBILE NUMBER</label><div class="input-wrap"><input id="team-head-mobile" name="teamHeadMobile" type="tel" inputmode="numeric" placeholder="Enter 10-digit mobile number" required maxlength="10" pattern="[0-9]{10}" title="Enter a 10-digit mobile number" autocomplete="tel"></div></div>
     </div>
     <label class="terms"><input id="details-confirmed" name="detailsConfirmed" type="checkbox" value="true" required><span>I confirm that the details provided are correct.</span></label>
-    <button class="submit" type="submit">CONFIRM ENTRY &nbsp; ▶</button>
+    <div class="registration-action-row">
+<a class="instagram-follow" href="https://www.instagram.com/battle_royaleclub?psln=MXE3ZnQ4ZTZrYWliaQ==" target="_blank" rel="noopener noreferrer" aria-label="Follow Battle Royale Club on Instagram (opens in a new tab)">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+      </svg>
+      <span>FOLLOW US ON INSTAGRAM<small>@battle_royaleclub · Follow for updates</small></span>
+    </a>
+<button class="submit" type="submit">CONFIRM ENTRY &nbsp; ▶</button>
+    </div>
     <div class="message" id="message" role="status"></div>
     <p class="note">Secure registration · No payment proof required.</p>
   </form>
