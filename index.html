@@ -352,10 +352,17 @@ function sound(type) {
     const now = audioCtx.currentTime;
     const master = audioCtx.createGain();
     master.gain.setValueAtTime(type === 'headshot' ? .7 : .42, now);
-    master.gain.exponentialRampToValueAtTime(.001, now + (type === 'headshot' ? .48 : .22));
+    master.gain.exponentialRampToValueAtTime(
+      .001,
+      now + (type === 'headshot' ? .48 : .22)
+    );
     master.connect(audioCtx.destination);
 
-    const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate * .18, audioCtx.sampleRate);
+    const buffer = audioCtx.createBuffer(
+      1,
+      audioCtx.sampleRate * .18,
+      audioCtx.sampleRate
+    );
     const data = buffer.getChannelData(0);
 
     for (let i = 0; i < data.length; i++) {
@@ -364,5 +371,192 @@ function sound(type) {
 
     const noise = audioCtx.createBufferSource();
     noise.buffer = buffer;
+    noise.connect(master);
+    noise.start(now);
+  } catch (error) {
+    // Sound effects are optional; they must not interrupt registration.
+  }
+}
 
-    con
+const API_BASE = 'https://battle-royale-registration-system.onrender.com';
+const form = document.getElementById('reg-form');
+const modeSelect = document.getElementById('mode-select');
+const soloFields = document.getElementById('solo-fields');
+const squadFields = document.getElementById('squad-fields');
+const submitButton = form.querySelector('.submit');
+const messageBox = document.getElementById('message');
+const confirmationPage = document.getElementById('confirmation-page');
+const assignedTeamLabel = document.getElementById('assigned-team-label');
+const confirmationMessage = document.querySelector('.confirmation-message');
+const confirmationSub = document.querySelector('.confirmation-sub');
+const backButton = document.getElementById('back-to-form');
+const successSound = document.getElementById('success-loop-sound');
+
+function setMessage(text, isError = false) {
+  messageBox.textContent = text;
+  messageBox.style.display = text ? 'block' : 'none';
+  messageBox.style.borderColor = isError ? '#ff3b18' : '#ffb21c77';
+  messageBox.style.color = isError ? '#ff9b8a' : '#ffd18b';
+}
+
+function updateModeFields() {
+  const isSolo = modeSelect.value === 'solo';
+  soloFields.style.display = isSolo ? 'block' : 'none';
+  squadFields.style.display = isSolo ? 'none' : 'block';
+
+  soloFields.querySelectorAll('input').forEach(input => {
+    input.disabled = !isSolo;
+    input.required = isSolo;
+  });
+
+  squadFields.querySelectorAll('input').forEach(input => {
+    input.disabled = isSolo;
+    input.required = !isSolo;
+  });
+
+  setMessage('');
+}
+
+modeSelect.addEventListener('change', updateModeFields);
+updateModeFields();
+
+async function loadStats() {
+  const stats = document.getElementById('registration-stats');
+
+  try {
+    const response = await fetch(API_BASE + '/api/stats', {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    if (!response.ok) throw new Error('Stats unavailable');
+
+    const data = await response.json();
+    stats.textContent =
+      'ENTRIES: ' + Number(data.total || 0) +
+      '  ·  SOLO: ' + Number(data.solo || 0) +
+      '  ·  SQUAD: ' + Number(data.squad || 0);
+  } catch (error) {
+    stats.textContent = 'TOURNAMENT REGISTRATION';
+  }
+}
+
+loadStats();
+
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  const currentMode = modeSelect.value;
+  const originalButtonText = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.textContent = 'SUBMITTING ENTRY...';
+  setMessage('Submitting your registration securely...');
+
+  try {
+    const formData = new FormData(form);
+
+    const response = await fetch(API_BASE + '/api/registrations', {
+      method: 'POST',
+      body: formData,
+      cache: 'no-store'
+    });
+
+    let result;
+    try {
+      result = await response.json();
+    } catch {
+      throw new Error('The server returned an unexpected response. Please try again.');
+    }
+
+    if (!response.ok || !result.ok) {
+      throw new Error(
+        result.error ||
+        result.message ||
+        'Registration failed. Please check your details and try again.'
+      );
+    }
+
+    submissionSucceeded = true;
+
+    // Stop background music during the confirmation celebration.
+    bgMusic.pause();
+    musicOn = false;
+    musicToggle.textContent = '♫ MUSIC OFF';
+    musicToggle.setAttribute('aria-label', 'Background music is off');
+
+    const assignedNumber = result.teamLabel ||
+      (result.teamNumber != null
+        ? String(result.mode || currentMode).toUpperCase() + ' ' + result.teamNumber
+        : String(currentMode).toUpperCase() + ' NUMBER PENDING');
+
+    confirmationMessage.textContent =
+      'REGISTRATION CONFIRMED · ' + (result.registrationCode || 'SUCCESS');
+
+    assignedTeamLabel.textContent = assignedNumber;
+
+    confirmationSub.textContent =
+      'Your registration has been saved successfully. Keep your registration code: ' +
+      (result.registrationCode || 'Not provided by server');
+
+    confirmationPage.classList.add('active');
+    startFireworks();
+    visualShot(true);
+    sound('headshot');
+
+    try {
+      successSound.currentTime = 0;
+      successSound.volume = 0.65;
+      await successSound.play();
+    } catch (error) {
+      // Browsers may block audio playback; registration is already successful.
+    }
+
+    await loadStats();
+
+  } catch (error) {
+    setMessage(
+      error.message ||
+      'Could not connect to the registration server. Please try again.',
+      true
+    );
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = originalButtonText;
+  }
+});
+
+backButton.addEventListener('click', () => {
+  confirmationPage.classList.remove('active');
+  fireworksLayer.classList.remove('active');
+
+  if (fireworksTimer) {
+    clearInterval(fireworksTimer);
+    fireworksTimer = null;
+  }
+
+  fireworksLayer.replaceChildren();
+  successSound.pause();
+  successSound.currentTime = 0;
+
+  // Keep the entered form values so the user can review them.
+  submissionSucceeded = false;
+  setMessage('');
+  document.getElementById('register').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+});
+
+// Try to play the background video where supported.
+const bgVideo = document.getElementById('bg-video');
+if (bgVideo) {
+  bgVideo.play().catch(() => {
+    // The poster/background color remains as a fallback.
+  });
+}
+</script>
+
+</body>
+</html>
